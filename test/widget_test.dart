@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:pinterest_clone/app.dart';
 import 'package:pinterest_clone/main.dart';
 
 void main() {
