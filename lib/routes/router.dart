@@ -1,0 +1,83 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pinterest_clone/routes/routes.dart';
+import '../screens/HomeScreen.dart';
+import '../screens/SignUp Screens/Create_Name_Screen.dart';
+import '../screens/SignUp Screens/Create_Password_Screen.dart';
+import '../screens/Startup_screen.dart';
+import '../screens/loader_screen.dart';
+import '../screens/login_Screen.dart';
+import '../services/state/auth_session.dart';
+import '../services/state/providers.dart';
+
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
+final appRouterProvider = Provider<GoRouter>((ref) {
+  final auth = ref.watch(authControllerProvider);
+
+  return GoRouter(
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: AppRoutes.loader,
+    routes: [
+      GoRoute(
+        path: AppRoutes.loader,
+        builder: (context, state) => const LoaderScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.emailEntry,
+        builder: (context, state) => const EmailEntryScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.login,
+        builder: (context, state) {
+          final email = state.uri.queryParameters['email'];
+          return LoginScreen(email: email);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.createPassword,
+        builder: (context, state) => const CreatePasswordScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.createName,
+        builder: (context, state) => const CreateNameScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.home,
+        builder: (context, state) => const HomeScreen(),
+      ),
+    ],
+    redirect: (context, state) {
+      final location = state.matchedLocation;
+      final isAuthRoute = location.startsWith('/auth/');
+      final isLoader = location == AppRoutes.loader;
+
+      if (auth.status == AuthStatus.unknown) {
+        return isLoader ? null : AppRoutes.loader;
+      }
+
+      if (auth.isSubmitting) {
+        return null;
+      }
+
+      if (auth.status == AuthStatus.authenticated) {
+        if (isLoader || isAuthRoute) {
+          return AppRoutes.home;
+        }
+        return null;
+      }
+
+      if (auth.status == AuthStatus.unauthenticated) {
+        if (location == AppRoutes.home) {
+          return AppRoutes.emailEntry;
+        }
+        if (isLoader) {
+          return AppRoutes.emailEntry;
+        }
+      }
+
+      return null;
+    },
+  );
+});
