@@ -5,9 +5,13 @@ import 'package:pinterest_clone/screens/loader_screen.dart';
 class AppRoutes {
   static const String loader = '/';
   static const String startupScreen = '/email-entry';
+  static const String login = '/login';
+  static const String signup = '/signup';
 
   static Map<String, WidgetBuilder> routes = {
     loader: (context) => const LoaderScreen(),
     startupScreen: (context) => const EmailEntryScreen(),
+    login: (context) => const EmailEntryScreen(),
+    signup: (context) => const EmailEntryScreen(),
   };
 }
