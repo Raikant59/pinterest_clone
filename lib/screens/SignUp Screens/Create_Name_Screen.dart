@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pinterest_clone/screens/SignUp Screens/widgets/progress_dots.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/services/state/providers.dart';
 
-class CreateNameScreen extends StatefulWidget {
-  // final String email;
-  final String password;
-
-  const CreateNameScreen({
-    super.key,
-    // required this.email,
-    required this.password,
-  });
+class CreateNameScreen extends ConsumerStatefulWidget {
+  const CreateNameScreen({super.key});
 
   @override
-  State<CreateNameScreen> createState() => _CreateNameScreenState();
+  ConsumerState<CreateNameScreen> createState() => _CreateNameScreenState();
 }
 
-class _CreateNameScreenState extends State<CreateNameScreen> {
+class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
   final TextEditingController _nameController = TextEditingController();
 
   static const Color screenBackground = Color(0xFFF6F6F6);
@@ -41,17 +36,30 @@ class _CreateNameScreenState extends State<CreateNameScreen> {
     super.dispose();
   }
 
-  void _handleNext() {
+  Future<void> _handleNext() async {
     if (!_hasName) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Collected: ${widget.password}, ${_nameController.text.trim()}',
-          // 'Collected: ${widget.email}, ${widget.password}, ${_nameController.text.trim()}',
-        ),
-      ),
+    ref.read(signupDraftProvider.notifier).setFullName(
+      _nameController.text.trim(),
     );
+
+    final draft = ref.read(signupDraftProvider);
+
+    final success = await ref.read(authControllerProvider.notifier).signUp(
+      email: draft.email,
+      password: draft.password,
+      fullName: _nameController.text.trim(),
+    );
+
+    if (!mounted) return;
+
+    if (!success) {
+      final error = ref.read(authControllerProvider).errorMessage ??
+          'Sign up failed. Please try again.';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error)),
+      );
+    }
   }
 
   InputDecoration _nameDecoration() {

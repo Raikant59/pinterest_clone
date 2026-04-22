@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:pinterest_clone/routes/routes.dart';
-import '../services/auth_service.dart';
 import 'package:pinterest_clone/widgets/google_icon.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class EmailEntryScreen extends StatefulWidget {
+import '../services/state/providers.dart';
+import '../routes/routes.dart';
+
+class EmailEntryScreen extends ConsumerStatefulWidget {
   const EmailEntryScreen({super.key});
 
   @override
-  State<EmailEntryScreen> createState() => _EmailEntryScreenState();
+  ConsumerState<EmailEntryScreen> createState() => _EmailEntryScreenState();
 }
 
-class _EmailEntryScreenState extends State<EmailEntryScreen>
+class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
     with TickerProviderStateMixin {
   final TextEditingController _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -156,27 +160,22 @@ class _EmailEntryScreenState extends State<EmailEntryScreen>
       _isChecking = true;
     });
 
-    final String email = _emailController.text.trim();
-    final bool exists = await AuthService.instance.checkIfUserExists(email);
+    final email = _emailController.text.trim();
+    final exists =
+    await ref.read(emailLookupServiceProvider).checkIfUserExists(email);
 
     if (!mounted) return;
+
+    ref.read(signupDraftProvider.notifier).setEmail(email);
 
     setState(() {
       _isChecking = false;
     });
 
     if (exists) {
-      Navigator.pushNamed(
-        context,
-        AppRoutes.login,
-        arguments: email,
-      );
+      context.go('${AppRoutes.login}?email=${Uri.encodeComponent(email)}');
     } else {
-      Navigator.pushNamed(
-        context,
-        AppRoutes.signup,
-        arguments: email,
-      );
+      context.go(AppRoutes.createPassword);
     }
   }
 

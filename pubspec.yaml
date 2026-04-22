@@ -12,6 +12,12 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.7
+  flutter_riverpod: ^2.6.1
+  go_router: ^14.8.1
+  clerk_flutter: ^0.0.14-beta
+  clerk_auth: ^0.0.14-beta
+  path_provider: ^2.1.5
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_test:

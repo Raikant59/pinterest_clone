@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:pinterest_clone/screens/SignUp%20Screens/Name_input_Screen.dart';
 import 'package:pinterest_clone/screens/SignUp%20Screens/widgets/progress_dots.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../routes/routes.dart';
+import '../../services/state/providers.dart';
 
-class CreatePasswordScreen extends StatefulWidget {
-  // final String email;
-  //
-  // const CreatePasswordScreen({
-  //   super.key,
-  //   required this.email,
-  // });
+class CreatePasswordScreen extends ConsumerStatefulWidget {
+  const CreatePasswordScreen({super.key});
 
   @override
-  State<CreatePasswordScreen> createState() => _CreatePasswordScreenState();
+  ConsumerState<CreatePasswordScreen> createState() =>
+      _CreatePasswordScreenState();
 }
 
-class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
+class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
@@ -105,14 +104,11 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
   void _handleNext() {
     if (!_isValidPassword) return;
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => CreateNameScreen(
-          password: _passwordController.text.trim(),
-        ),
-      ),
+    ref.read(signupDraftProvider.notifier).setPassword(
+      _passwordController.text.trim(),
     );
+
+    context.go(AppRoutes.createName);
   }
 
   @override
