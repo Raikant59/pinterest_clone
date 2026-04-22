@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinterest_clone/screens/Startup_screen.dart';
 import 'package:pinterest_clone/screens/loader_screen.dart';
+import 'package:pinterest_clone/screens/login.dart';
 
 class AppRoutes {
   static const String loader = '/';
@@ -11,7 +12,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> routes = {
     loader: (context) => const LoaderScreen(),
     startupScreen: (context) => const EmailEntryScreen(),
-    login: (context) => const EmailEntryScreen(),
+    login: (context) => const LoginScreen(),
     signup: (context) => const EmailEntryScreen(),
   };
 }

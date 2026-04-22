@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinterest_clone/routes/routes.dart';
 import '../services/auth_service.dart';
+import 'package:pinterest_clone/widgets/google_icon.dart';
 
 class EmailEntryScreen extends StatefulWidget {
   const EmailEntryScreen({super.key});
@@ -364,7 +365,7 @@ class _EmailEntryScreenState extends State<EmailEntryScreen>
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
-                                  _GoogleGIcon(),
+                                  GoogleIcon(),
                                   SizedBox(width: 12),
                                   Text(
                                     'Continue with Google',
@@ -506,39 +507,39 @@ class _AnimatedTopSection extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             SlideTransition(
-              position: leftAnimation,
+              position: rightAnimation,
               child: const PositionedFillSafe(
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: const [
                     Positioned(
-                      left: -10,
-                      top: -10,
+                      right: 100,
+                      top: 75,
                       child: _CollageImageCard(
-                        imagePath: 'assets/images/one.jpg',
+                        imagePath: 'assets/images/three.jpg',
+                        width: 65,
+                        height: 70,
+                        radius: 18,
+                      ),
+                    ),
+                    Positioned(
+                      right: -8,
+                      bottom: 20,
+                      child: _CollageImageCard(
+                        imagePath: 'assets/images/five.jpg',
                         width: 78,
-                        height: 74,
-                        radius: 16,
+                        height: 88,
+                        radius: 18,
                       ),
                     ),
                     Positioned(
-                      left: -4,
-                      bottom: 0,
+                      right: -10,
+                      top: -50,
                       child: _CollageImageCard(
-                        imagePath: 'assets/images/Two.jpg',
-                        width: 80,
-                        height: 146,
-                        radius: 16,
-                      ),
-                    ),
-                    Positioned(
-                      left: 86,
-                      top: 38,
-                      child: _CollageImageCard(
-                        imagePath: 'assets/images/four.jpg',
-                        width: 128,
-                        height: 145,
-                        radius: 24,
+                        imagePath: 'assets/images/six.jpg',
+                        width: 100,
+                        height: 88,
+                        radius: 18,
                       ),
                     ),
                   ],
@@ -546,35 +547,40 @@ class _AnimatedTopSection extends StatelessWidget {
               ),
             ),
             SlideTransition(
-              position: rightAnimation,
+              position: leftAnimation,
               child: const PositionedFillSafe(
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: const [
                     Positioned(
-                      right: 88,
-                      top: 58,
+                      left: -10,
+                      top: -50,
                       child: _CollageImageCard(
-                        imagePath: 'assets/images/three.jpg',
-                        width: 60,
-                        height: 92,
-                        radius: 18,
+                        imagePath: 'assets/images/one.jpg',
+                        width: 95,
+                        height: 95,
+                        radius: 16,
                       ),
                     ),
                     Positioned(
-                      right: -4,
-                      bottom: 20,
+                      left: -4,
+                      top: 130,
                       child: _CollageImageCard(
-                        imagePath: 'assets/images/five.jpg',
-                        width: 68,
-                        height: 68,
-                        radius: 18,
+                        imagePath: 'assets/images/Two.jpg',
+                        width: 90,
+                        height: 150,
+                        radius: 16,
                       ),
                     ),
                     Positioned(
-                      right: -2,
-                      top: -10,
-                      child: _TopCutImageCompact(),
+                      left: 100,
+                      top: 30,
+                      child: _CollageImageCard(
+                        imagePath: 'assets/images/four.jpg',
+                        width: 128,
+                        height: 190,
+                        radius: 24,
+                      ),
                     ),
                   ],
                 ),
@@ -582,24 +588,6 @@ class _AnimatedTopSection extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _TopCutImageCompact extends StatelessWidget {
-  const _TopCutImageCompact();
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        bottomLeft: Radius.circular(26),
-      ),
-      child: Container(
-        width: 92,
-        height: 28,
-        color: const Color(0xFFE8D9C7),
       ),
     );
   }
@@ -633,8 +621,8 @@ class _AnimatedHeadline extends StatelessWidget {
                   'Create a life',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w800,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w600,
                   color: Colors.black,
                   height: 1.1,
                   letterSpacing: -0.2,
@@ -655,8 +643,8 @@ class _AnimatedHeadline extends StatelessWidget {
                   'you love',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w800,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
                     color: Colors.black,
                     height: 1.1,
                     letterSpacing: -0.2,
@@ -722,28 +710,6 @@ class _PinterestRoundLogo extends StatelessWidget {
         'assets/images/pinterest_splash_logo.png',
         width: 70,
         height: 70,
-      ),
-    );
-  }
-}
-
-class _GoogleGIcon extends StatelessWidget {
-  const _GoogleGIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 24,
-      height: 24,
-      alignment: Alignment.center,
-      child: const Text(
-        'G',
-        style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w700,
-          color: Color(0xFF4285F4),
-          height: 1,
-        ),
       ),
     );
   }

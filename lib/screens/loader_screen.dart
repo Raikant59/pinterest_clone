@@ -17,7 +17,7 @@ class _LoaderScreenState extends State<LoaderScreen>
   @override
   void initState() {
     super.initState();
-    _timer = Timer(const Duration(milliseconds: 400), () {
+    _timer = Timer(const Duration(milliseconds: 300), () {
       if (!mounted) return;
       Navigator.pushReplacementNamed(context, AppRoutes.startupScreen);
     });

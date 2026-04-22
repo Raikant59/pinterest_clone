@@ -26,7 +26,7 @@ class _LoaderState extends State<Loader>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 200),
     )..repeat();
   }
 
