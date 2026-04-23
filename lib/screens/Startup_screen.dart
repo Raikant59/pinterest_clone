@@ -173,9 +173,9 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
     });
 
     if (exists) {
-      context.go('${AppRoutes.login}?email=${Uri.encodeComponent(email)}');
+      context.push('${AppRoutes.login}?email=${Uri.encodeComponent(email)}');
     } else {
-      context.go(AppRoutes.createPassword);
+      context.push(AppRoutes.createPassword);
     }
   }
 

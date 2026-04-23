@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pinterest_clone/routes/route_transition.dart';
 import 'package:pinterest_clone/routes/routes.dart';
 import '../screens/HomeScreen.dart';
 import '../screens/SignUp Screens/Create_Name_Screen.dart';
@@ -41,7 +42,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoutes.createName,
-        builder: (context, state) => const CreateNameScreen(),
+        pageBuilder: (context, state) {
+          return buildAuthSlidePage(
+            key: state.pageKey,
+            child: const CreateNameScreen(),
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.home,

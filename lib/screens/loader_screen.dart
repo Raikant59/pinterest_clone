@@ -36,11 +36,11 @@ class _LoaderScreenState extends State<LoaderScreen>
   Color _animatedColor(double t, int index) {
     final shifted = (t + index / 3) % 1.0;
     if (shifted < 1 / 3) {
-      return Color.lerp(_colors[0], _colors[1], shifted * 3)!;
+      return Color.lerp(_colors[0], _colors[0], shifted * 3)!;
     } else if (shifted < 2 / 3) {
-      return Color.lerp(_colors[1], _colors[2], (shifted - 1 / 3) * 3)!;
+      return Color.lerp(_colors[1], _colors[1], (shifted - 1 / 3) * 3)!;
     }
-    return Color.lerp(_colors[2], _colors[0], (shifted - 2 / 3) * 3)!;
+    return Color.lerp(_colors[2], _colors[2], (shifted - 2 / 3) * 3)!;
   }
 
   @override

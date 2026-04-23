@@ -108,7 +108,7 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
       _passwordController.text.trim(),
     );
 
-    context.go(AppRoutes.createName);
+    context.push(AppRoutes.createName);
   }
 
   @override
@@ -136,7 +136,7 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
                         child: Row(
                           children: [
                             IconButton(
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () => context.pop(),
                               padding: EdgeInsets.zero,
                               splashRadius: 20,
                               icon: const Icon(

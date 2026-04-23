@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pinterest_clone/widgets/google_icon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/state/providers.dart';
@@ -122,7 +123,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   child: IconButton(
                                     padding: EdgeInsets.zero,
                                     splashRadius: 20,
-                                    onPressed: () => Navigator.pop(context),
+                                    onPressed: () => context.pop(),
                                     icon: const Icon(
                                       Icons.close,
                                       size: 30,

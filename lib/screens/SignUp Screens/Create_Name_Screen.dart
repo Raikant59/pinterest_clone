@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pinterest_clone/screens/SignUp Screens/widgets/progress_dots.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/services/state/providers.dart';
@@ -103,7 +104,7 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
                         child: Row(
                           children: [
                             IconButton(
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () => context.pop(),
                               padding: EdgeInsets.zero,
                               splashRadius: 20,
                               icon: const Icon(
@@ -214,7 +215,7 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
                               ),
                             ),
                             child: const Text(
-                              'Next',
+                              'Sign Up',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
