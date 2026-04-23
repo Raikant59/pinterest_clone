@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:pinterest_clone/routes/routes.dart';
 
 class Loader extends StatefulWidget {
   const Loader({super.key});
