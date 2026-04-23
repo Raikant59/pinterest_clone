@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pinterest_clone/routes/route_transition.dart';
 import 'package:pinterest_clone/routes/routes.dart';
 import '../screens/HomeScreen.dart';
+import '../screens/Main_shell_Screen.dart';
 import '../screens/SignUp Screens/Create_Name_Screen.dart';
 import '../screens/SignUp Screens/Create_Password_Screen.dart';
 import '../screens/Startup_screen.dart';
@@ -51,7 +52,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoutes.home,
-        builder: (context, state) => const HomeScreen(),
+        name: 'home',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const MainShellScreen(currentIndex: 0),
       ),
     ],
     redirect: (context, state) {

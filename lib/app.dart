@@ -13,6 +13,7 @@ class PinterestCloneApp extends ConsumerWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: router,
+
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFF6F6F6),
         useMaterial3: true,

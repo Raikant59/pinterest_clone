@@ -53,8 +53,8 @@ class _LoaderScreenState extends State<LoaderScreen>
           builder: (context, _) {
             final t = _controller.value;
             return SizedBox(
-              width: 72,
-              height: 72,
+              width: 20,
+              height: 20,
               child: Stack(
                 alignment: Alignment.center,
                 children: List.generate(3, (index) {
@@ -65,8 +65,8 @@ class _LoaderScreenState extends State<LoaderScreen>
                   return Transform.translate(
                     offset: Offset(dx, dy),
                     child: Container(
-                      width: 12,
-                      height: 12,
+                      width: 10,
+                      height: 10,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _animatedColor(t, index),
