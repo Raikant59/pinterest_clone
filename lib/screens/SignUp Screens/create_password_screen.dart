@@ -3,7 +3,7 @@ import 'package:pinterest_clone/screens/SignUp%20Screens/widgets/progress_dots.d
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../routes/routes.dart';
-import '../../services/state/providers.dart';
+import '../../features/auth/state/providers.dart';
 
 class CreatePasswordScreen extends ConsumerStatefulWidget {
   const CreatePasswordScreen({super.key});

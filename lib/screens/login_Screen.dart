@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinterest_clone/widgets/google_icon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../services/state/providers.dart';
+import '../features/auth/state/providers.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   final String? email;

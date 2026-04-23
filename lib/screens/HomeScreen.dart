@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/services/state/providers.dart';
+import 'package:pinterest_clone/features/auth/state/providers.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});

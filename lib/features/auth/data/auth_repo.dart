@@ -2,7 +2,7 @@ import 'package:clerk_auth/clerk_auth.dart' as clerk;
 import 'package:clerk_flutter/clerk_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../state/providers.dart';
+import '../../../features/auth/state/providers.dart';
 
 class AuthRepository {
   AuthRepository(this.ref);

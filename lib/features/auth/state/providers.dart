@@ -1,7 +1,7 @@
 import 'package:clerk_flutter/clerk_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/services/auth/auth_repo.dart';
-import '../auth/email_lookup_service.dart';
+import 'package:pinterest_clone/features/auth/data/auth_repo.dart';
+import '../data/email_lookup_service.dart';
 import 'auth_controller.dart';
 import 'auth_session.dart';
 import 'signup_draft.dart';

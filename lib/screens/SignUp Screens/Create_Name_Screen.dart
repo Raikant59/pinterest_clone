@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinterest_clone/screens/SignUp Screens/widgets/progress_dots.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/services/state/providers.dart';
+import 'package:pinterest_clone/features/auth/state/providers.dart';
 
 class CreateNameScreen extends ConsumerStatefulWidget {
   const CreateNameScreen({super.key});

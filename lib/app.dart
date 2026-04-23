@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/routes/router.dart';
-import 'package:pinterest_clone/services/widgets/clerk_session_bridge.dart';
+import 'package:pinterest_clone/features/auth/widgets/clerk_session_bridge.dart';
 
 class PinterestCloneApp extends ConsumerWidget {
   const PinterestCloneApp({super.key});

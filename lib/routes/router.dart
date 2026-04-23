@@ -9,8 +9,8 @@ import '../screens/SignUp Screens/Create_Password_Screen.dart';
 import '../screens/Startup_screen.dart';
 import '../screens/loader_screen.dart';
 import '../screens/login_Screen.dart';
-import '../services/state/auth_session.dart';
-import '../services/state/providers.dart';
+import '../features/auth/state/auth_session.dart';
+import '../features/auth/state/providers.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 

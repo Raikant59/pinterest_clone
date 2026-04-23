@@ -3,7 +3,7 @@ import 'package:pinterest_clone/routes/routes.dart';
 import 'package:pinterest_clone/widgets/google_icon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../services/state/providers.dart';
+import '../features/auth/state/providers.dart';
 
 class EmailEntryScreen extends ConsumerStatefulWidget {
   const EmailEntryScreen({super.key});
