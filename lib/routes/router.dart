@@ -12,6 +12,7 @@ import '../screens/loader_screen.dart';
 import '../screens/login_Screen.dart';
 import '../features/auth/state/auth_session.dart';
 import '../features/auth/state/providers.dart';
+import '../screens/saved_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -56,6 +57,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const MainShellScreen(currentIndex: 0),
       ),
+      GoRoute(
+        path: AppRoutes.saved,
+        name: 'saved',
+        builder: (context, state) => const SavedScreen(),
+      ),
     ],
     redirect: (context, state) {
       final location = state.matchedLocation;
@@ -78,9 +84,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       }
 
       if (auth.status == AuthStatus.unauthenticated) {
-        if (location == AppRoutes.home) {
+        if (location == AppRoutes.home ||
+            location == AppRoutes.saved ) {
           return AppRoutes.emailEntry;
         }
+
         if (isLoader) {
           return AppRoutes.emailEntry;
         }
