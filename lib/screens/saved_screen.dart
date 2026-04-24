@@ -92,7 +92,7 @@ class _SavedHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(14, 18, 14, 0),
+      padding: const EdgeInsets.fromLTRB(12, 18, 12, 0),
       child: Column(
         children: [
           Row(
@@ -101,8 +101,8 @@ class _SavedHeader extends StatelessWidget {
                 onTap: onAvatarTap,
                 borderRadius: BorderRadius.circular(24),
                 child: Container(
-                  width: 40,
-                  height: 40,
+                  width: 38,
+                  height: 38,
                   decoration: const BoxDecoration(
                     color: Color(0xFFB44ED3),
                     shape: BoxShape.circle,
@@ -111,14 +111,14 @@ class _SavedHeader extends StatelessWidget {
                   child: Text(
                     avatarLetter,
                     style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: 12),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -184,7 +184,7 @@ class _HeaderTab extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(10),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         child: Column(
           children: [
             Text(
@@ -199,7 +199,7 @@ class _HeaderTab extends StatelessWidget {
             const SizedBox(height: 2),
             AnimatedContainer(
               duration: const Duration(milliseconds: 160),
-              width: selected ? 52 : 0,
+              width: selected ? 62 : 0,
               height: 3,
               color: Colors.black,
             ),
@@ -254,10 +254,13 @@ class _SavedSearchRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          const Icon(
-            Icons.add,
-            size: 32,
-            color: Colors.black,
+          InkWell(
+            onTap: (){},
+            child: const Icon(
+              Icons.add,
+              size: 32,
+              color: Colors.black,
+            ),
           ),
         ],
       ),
