@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../routes/routes.dart';
 import '../../features/auth/state/providers.dart';
+import '../../utils/app_responsive.dart';
 
 class CreatePasswordScreen extends ConsumerStatefulWidget {
   const CreatePasswordScreen({super.key});
@@ -33,7 +34,8 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
   bool get _hasMinLength => _password.length >= 8;
   bool get _hasLetter => RegExp(r'[A-Za-z]').hasMatch(_password);
   bool get _hasNumber => RegExp(r'[0-9]').hasMatch(_password);
-  bool get _hasSymbol => RegExp(r'[!@#\$%^&*(),.?":{}|<>\[\]\\\/_\-+=~`]').hasMatch(_password);
+  bool get _hasSymbol =>
+      RegExp(r'[!@#\$%^&*(),.?":{}|<>\[\]\\\/_\-+=~`]').hasMatch(_password);
 
   bool get _isValidPassword =>
       _hasMinLength && _hasLetter && _hasNumber && _hasSymbol;
@@ -68,7 +70,7 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
   String get _statusText {
     if (!_hasPassword) return '';
     if (_isValidPassword) return 'Perfection!';
-    if (_criteriaCount >= 3) return "Looks good";
+    if (_criteriaCount >= 3) return 'Looks good';
     return 'Make it more complicated';
   }
 
@@ -86,13 +88,13 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
     super.dispose();
   }
 
-  InputDecoration _passwordDecoration() {
+  InputDecoration _passwordDecoration(BuildContext context) {
     return InputDecoration(
       border: InputBorder.none,
       hintText: _hasPassword ? null : 'Create a strong password',
-      hintStyle: const TextStyle(
+      hintStyle: TextStyle(
         color: hintColor,
-        fontSize: 15,
+        fontSize: AppResponsive.sp(context, 15).clamp(13.0, 16.0),
         fontWeight: FontWeight.w400,
         letterSpacing: -0.2,
       ),
@@ -114,6 +116,22 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final double keyboardInset = MediaQuery.of(context).viewInsets.bottom;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+    final double sidePadding =
+    AppResponsive.w(context, 18).clamp(14.0, 22.0);
+    final double topGap =
+    AppResponsive.h(context, 10).clamp(8.0, 12.0);
+    final double titleGap =
+    AppResponsive.h(context, 4).clamp(2.0, 6.0);
+    final double fieldGap =
+    AppResponsive.h(context, 18).clamp(14.0, 20.0);
+    final double progressGap =
+    AppResponsive.h(context, 10).clamp(8.0, 12.0);
+    final double statusGap =
+    AppResponsive.h(context, 14).clamp(10.0, 16.0);
+    final double buttonBottomGap =
+    AppResponsive.h(context, 8).clamp(6.0, 10.0);
 
     return Scaffold(
       backgroundColor: screenBackground,
@@ -123,26 +141,35 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
           builder: (context, constraints) {
             return SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              padding: EdgeInsets.only(bottom: keyboardInset > 0 ? 20 : 0),
+              padding: EdgeInsets.only(
+                bottom: keyboardInset > 0
+                    ? AppResponsive.h(context, 20).clamp(14.0, 24.0)
+                    : 0,
+              ),
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: IntrinsicHeight(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 10),
+                      SizedBox(height: topGap),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(
+                          horizontal:
+                          AppResponsive.w(context, 10).clamp(8.0, 14.0),
+                        ),
                         child: Row(
                           children: [
                             IconButton(
                               onPressed: () => context.pop(),
                               padding: EdgeInsets.zero,
-                              splashRadius: 20,
-                              icon: const Icon(
+                              splashRadius: AppResponsive.r(context, 20)
+                                  .clamp(18.0, 22.0),
+                              icon: Icon(
                                 Icons.arrow_back_ios_new,
-                                size: 24,
-                                color: Color(0xFF66665E),
+                                size: AppResponsive.r(context, 24)
+                                    .clamp(20.0, 26.0),
+                                color: const Color(0xFF66665E),
                               ),
                             ),
                             const Expanded(
@@ -154,43 +181,55 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 40),
+                            SizedBox(
+                              width: AppResponsive.w(context, 40)
+                                  .clamp(32.0, 44.0),
+                            ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      const Center(
+                      SizedBox(height: titleGap),
+                      Center(
                         child: Text(
                           'Create a password',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize:
+                            AppResponsive.sp(context, 20).clamp(18.0, 22.0),
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
                             letterSpacing: -0.6,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 18),
+                      SizedBox(height: fieldGap),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        padding: EdgeInsets.symmetric(horizontal: sidePadding),
                         child: Container(
-                          height: 68,
-                          padding: const EdgeInsets.fromLTRB(14, 6, 12, 2),
+                          height: AppResponsive.h(context, 68).clamp(60.0, 72.0),
+                          padding: EdgeInsets.fromLTRB(
+                            AppResponsive.w(context, 14).clamp(12.0, 16.0),
+                            AppResponsive.h(context, 6).clamp(4.0, 8.0),
+                            AppResponsive.w(context, 12).clamp(10.0, 14.0),
+                            AppResponsive.h(context, 2).clamp(1.0, 4.0),
+                          ),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
+                            borderRadius: BorderRadius.circular(
+                              AppResponsive.r(context, 24).clamp(20.0, 26.0),
+                            ),
                             border: Border.all(
                               color: borderColor,
-                              width: 2,
+                              width: AppResponsive.r(context, 2).clamp(1.5, 2.2),
                             ),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'Password',
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: AppResponsive.sp(context, 13)
+                                      .clamp(11.5, 13.5),
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                   letterSpacing: 0,
@@ -202,30 +241,41 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
                                     child: TextField(
                                       controller: _passwordController,
                                       obscureText: _obscurePassword,
-                                      style: const TextStyle(
-                                        fontSize: 12,
+                                      style: TextStyle(
+                                        fontSize: AppResponsive.sp(context, 12)
+                                            .clamp(11.0, 13.0),
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         letterSpacing: -0.2,
                                       ),
-                                      decoration: _passwordDecoration(),
+                                      decoration: _passwordDecoration(context),
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(
+                                    width: AppResponsive.w(context, 8)
+                                        .clamp(6.0, 10.0),
+                                  ),
                                   InkWell(
                                     onTap: () {
                                       setState(() {
                                         _obscurePassword = !_obscurePassword;
                                       });
                                     },
-                                    borderRadius: BorderRadius.circular(30),
+                                    borderRadius: BorderRadius.circular(
+                                      AppResponsive.r(context, 30)
+                                          .clamp(24.0, 32.0),
+                                    ),
                                     child: Padding(
-                                      padding: const EdgeInsets.all(6),
+                                      padding: EdgeInsets.all(
+                                        AppResponsive.r(context, 6)
+                                            .clamp(4.0, 7.0),
+                                      ),
                                       child: Icon(
                                         _obscurePassword
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
-                                        size: 24,
+                                        size: AppResponsive.r(context, 24)
+                                            .clamp(20.0, 26.0),
                                         color: Colors.black,
                                       ),
                                     ),
@@ -236,24 +286,25 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
-
+                      SizedBox(height: progressGap),
                       if (_hasPassword)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 26),
+                          padding: EdgeInsets.symmetric(
+                            horizontal:
+                            AppResponsive.w(context, 26).clamp(18.0, 30.0),
+                          ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(999),
                             child: Container(
-                              height: 10,
+                              height: AppResponsive.h(context, 10)
+                                  .clamp(8.0, 11.0),
                               color: const Color(0xFFE3E3DE),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: AnimatedContainer(
                                   duration: const Duration(milliseconds: 260),
                                   curve: Curves.easeOut,
-                                  width: MediaQuery.of(context).size.width *
-                                      0.72 *
-                                      _progressValue,
+                                  width: screenWidth * 0.72 * _progressValue,
                                   decoration: BoxDecoration(
                                     color: _progressColor,
                                     borderRadius: BorderRadius.circular(999),
@@ -263,11 +314,12 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
                             ),
                           ),
                         ),
-
-                      const SizedBox(height: 14),
-
+                      SizedBox(height: statusGap),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        padding: EdgeInsets.symmetric(
+                          horizontal:
+                          AppResponsive.w(context, 30).clamp(22.0, 34.0),
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -275,35 +327,36 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
                               Text(
                                 _statusText,
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize: AppResponsive.sp(context, 15)
+                                      .clamp(13.0, 16.0),
                                   fontWeight: FontWeight.w700,
-                                  color: _isValidPassword
-                                      ? const Color(0xFF5F5F5A)
-                                      : const Color(0xFF5F5F5A),
+                                  color: const Color(0xFF5F5F5A),
                                 ),
                               ),
-                            if (_hasPassword) const SizedBox(height: 4),
-                            const Text(
+                            if (_hasPassword)
+                              SizedBox(
+                                height: AppResponsive.h(context, 4)
+                                    .clamp(2.0, 6.0),
+                              ),
+                            Text(
                               'Use 8 or more letters, numbers and symbols',
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: AppResponsive.sp(context, 13)
+                                    .clamp(11.5, 13.5),
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xFF6D6D68),
+                                color: const Color(0xFF6D6D68),
                                 letterSpacing: -0.2,
                               ),
                             ),
                           ],
                         ),
                       ),
-
-
                       const Spacer(),
-
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        padding: EdgeInsets.symmetric(horizontal: sidePadding),
                         child: SizedBox(
                           width: double.infinity,
-                          height: 54,
+                          height: AppResponsive.h(context, 54).clamp(48.0, 58.0),
                           child: ElevatedButton(
                             onPressed: _isValidPassword ? _handleNext : null,
                             style: ElevatedButton.styleFrom(
@@ -315,13 +368,16 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
                               disabledBackgroundColor: disabledButton,
                               disabledForegroundColor: disabledText,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
+                                borderRadius: BorderRadius.circular(
+                                  AppResponsive.r(context, 24).clamp(20.0, 26.0),
+                                ),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'Next',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: AppResponsive.sp(context, 16)
+                                    .clamp(14.0, 17.0),
                                 fontWeight: FontWeight.w500,
                                 letterSpacing: -0.2,
                               ),
@@ -329,7 +385,7 @@ class _CreatePasswordScreenState extends ConsumerState<CreatePasswordScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: buttonBottomGap),
                     ],
                   ),
                 ),

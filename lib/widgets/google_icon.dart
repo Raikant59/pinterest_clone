@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import '../utils/app_responsive.dart';
 
 class GoogleIcon extends StatelessWidget {
-  const GoogleIcon();
+  const GoogleIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 24,
-      height: 24,
-      alignment: Alignment.center,
-      child: const Text(
-        'G',
-        style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w700,
-          color: Color(0xFF4285F4),
-          height: 1,
+    final double boxSize = AppResponsive.r(context, 24).clamp(20.0, 28.0);
+    final double fontSize = AppResponsive.sp(context, 22).clamp(18.0, 24.0);
+
+    return SizedBox(
+      width: boxSize,
+      height: boxSize,
+      child: Center(
+        child: Text(
+          'G',
+          style: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFF4285F4),
+            height: 1,
+          ),
         ),
       ),
     );

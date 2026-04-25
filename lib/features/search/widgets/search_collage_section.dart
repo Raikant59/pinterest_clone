@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
+import '../../../utils/app_responsive.dart';
 import '../model/search_board_item.dart';
 
 class SearchCollageSectionWidget extends StatelessWidget {
@@ -14,13 +14,47 @@ class SearchCollageSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double outerHorizontal =
+    AppResponsive.w(context, 8).clamp(6.0, 10.0);
+    final double outerBottom =
+    AppResponsive.h(context, 22).clamp(18.0, 24.0);
+    final double innerHorizontal =
+    AppResponsive.w(context, 10).clamp(8.0, 12.0);
+    final double smallTitleSize =
+    AppResponsive.sp(context, 12).clamp(11.0, 13.0);
+    final double smallGap =
+    AppResponsive.h(context, 3).clamp(2.0, 4.0);
+    final double titleSize =
+    AppResponsive.sp(context, 20).clamp(18.0, 22.0);
+    final double searchBoxSize =
+    AppResponsive.r(context, 42).clamp(38.0, 46.0);
+    final double searchBoxRadius =
+    AppResponsive.r(context, 16).clamp(14.0, 18.0);
+    final double searchIconSize =
+    AppResponsive.r(context, 26).clamp(22.0, 28.0);
+    final double betweenHeaderAndCollage =
+    AppResponsive.h(context, 14).clamp(10.0, 16.0);
+    final double collageHeight =
+    AppResponsive.h(context, 150).clamp(130.0, 165.0);
+    final double collageRadius =
+    AppResponsive.r(context, 24).clamp(20.0, 26.0);
+    final double imageGap =
+    AppResponsive.w(context, 1).clamp(0.5, 1.5);
+    final double errorIconSize =
+    AppResponsive.r(context, 24).clamp(20.0, 28.0);
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 8, 22),
+      padding: EdgeInsets.fromLTRB(
+        outerHorizontal,
+        0,
+        outerHorizontal,
+        outerBottom,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: innerHorizontal),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -30,17 +64,17 @@ class SearchCollageSectionWidget extends StatelessWidget {
                     children: [
                       Text(
                         section.smallTitle,
-                        style: const TextStyle(
-                          fontSize: 12,
+                        style: TextStyle(
+                          fontSize: smallTitleSize,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
                       ),
-                      const SizedBox(height: 3),
+                      SizedBox(height: smallGap),
                       Text(
                         section.title,
-                        style: const TextStyle(
-                          fontSize: 20,
+                        style: TextStyle(
+                          fontSize: titleSize,
                           fontWeight: FontWeight.w800,
                           color: Colors.black,
                           height: 1.08,
@@ -51,45 +85,46 @@ class SearchCollageSectionWidget extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: 42,
-                  height: 42,
+                  width: searchBoxSize,
+                  height: searchBoxSize,
                   decoration: BoxDecoration(
                     color: const Color(0xFFE8E8E2),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(searchBoxRadius),
                   ),
                   alignment: Alignment.center,
-                  child: const Icon(
+                  child: Icon(
                     Icons.search,
-                    size: 26,
+                    size: searchIconSize,
                     color: Colors.black,
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: betweenHeaderAndCollage),
           SizedBox(
-            height: 150,
+            height: collageHeight,
             child: Row(
               children: List.generate(section.imageUrls.length, (index) {
                 final imageUrl = section.imageUrls[index];
+
                 BorderRadius radius = BorderRadius.zero;
                 if (index == 0) {
-                  radius = const BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    bottomLeft: Radius.circular(24),
+                  radius = BorderRadius.only(
+                    topLeft: Radius.circular(collageRadius),
+                    bottomLeft: Radius.circular(collageRadius),
                   );
                 } else if (index == section.imageUrls.length - 1) {
-                  radius = const BorderRadius.only(
-                    topRight: Radius.circular(24),
-                    bottomRight: Radius.circular(24),
+                  radius = BorderRadius.only(
+                    topRight: Radius.circular(collageRadius),
+                    bottomRight: Radius.circular(collageRadius),
                   );
                 }
 
                 return Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(
-                      left: index == 0 ? 0 : 1,
+                      left: index == 0 ? 0 : imageGap,
                     ),
                     child: ClipRRect(
                       borderRadius: radius,
@@ -108,7 +143,10 @@ class SearchCollageSectionWidget extends StatelessWidget {
                           return Container(
                             color: const Color(0xFFEAEAEA),
                             alignment: Alignment.center,
-                            child: const Icon(Icons.broken_image_outlined),
+                            child: Icon(
+                              Icons.broken_image_outlined,
+                              size: errorIconSize,
+                            ),
                           );
                         },
                       ),

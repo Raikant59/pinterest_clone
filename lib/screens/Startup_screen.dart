@@ -4,6 +4,7 @@ import 'package:pinterest_clone/widgets/google_icon.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../features/auth/state/providers.dart';
+import '../utils/app_responsive.dart';
 
 class EmailEntryScreen extends ConsumerStatefulWidget {
   const EmailEntryScreen({super.key});
@@ -185,45 +186,53 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
     super.dispose();
   }
 
-  InputDecoration _emailInputDecoration() {
+  InputDecoration _emailInputDecoration(BuildContext context) {
     return InputDecoration(
       hintText: 'Email address',
-      hintStyle: const TextStyle(
+      hintStyle: TextStyle(
         color: hintColor,
-        fontSize: 15,
+        fontSize: AppResponsive.sp(context, 15).clamp(13.0, 16.0),
         fontWeight: FontWeight.w400,
       ),
       isDense: true,
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 14,
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: AppResponsive.w(context, 16).clamp(14.0, 18.0),
+        vertical: AppResponsive.h(context, 14).clamp(12.0, 16.0),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(18),
-        borderSide: const BorderSide(
+        borderRadius: BorderRadius.circular(
+          AppResponsive.r(context, 18).clamp(16.0, 20.0),
+        ),
+        borderSide: BorderSide(
           color: borderColor,
-          width: 1.2,
+          width: AppResponsive.r(context, 1.2).clamp(1.0, 1.4),
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(18),
-        borderSide: const BorderSide(
+        borderRadius: BorderRadius.circular(
+          AppResponsive.r(context, 18).clamp(16.0, 20.0),
+        ),
+        borderSide: BorderSide(
           color: borderColor,
-          width: 1.6,
+          width: AppResponsive.r(context, 1.6).clamp(1.2, 1.8),
         ),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(18),
-        borderSide: const BorderSide(
+        borderRadius: BorderRadius.circular(
+          AppResponsive.r(context, 18).clamp(16.0, 20.0),
+        ),
+        borderSide: BorderSide(
           color: Colors.red,
-          width: 1.2,
+          width: AppResponsive.r(context, 1.2).clamp(1.0, 1.4),
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(18),
-        borderSide: const BorderSide(
+        borderRadius: BorderRadius.circular(
+          AppResponsive.r(context, 18).clamp(16.0, 20.0),
+        ),
+        borderSide: BorderSide(
           color: Colors.red,
-          width: 1.4,
+          width: AppResponsive.r(context, 1.4).clamp(1.2, 1.6),
         ),
       ),
     );
@@ -232,6 +241,8 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
   @override
   Widget build(BuildContext context) {
     final double keyboardInset = MediaQuery.of(context).viewInsets.bottom;
+    final double horizontalPadding =
+    AppResponsive.w(context, 28).clamp(22.0, 32.0);
 
     return Scaffold(
       backgroundColor: screenBackground,
@@ -242,7 +253,11 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
             return AnimatedPadding(
               duration: const Duration(milliseconds: 200),
               curve: Curves.easeOut,
-              padding: EdgeInsets.only(bottom: keyboardInset > 0 ? 12 : 0),
+              padding: EdgeInsets.only(
+                bottom: keyboardInset > 0
+                    ? AppResponsive.h(context, 12).clamp(8.0, 14.0)
+                    : 0,
+              ),
               child: SingleChildScrollView(
                 keyboardDismissBehavior:
                 ScrollViewKeyboardDismissBehavior.onDrag,
@@ -253,9 +268,11 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
                   child: IntrinsicHeight(
                     child: Column(
                       children: [
-                        SizedBox(height: keyboardInset > 0 ? 4 : 4),
                         SizedBox(
-                          height: 224,
+                          height: AppResponsive.h(context, 4).clamp(2.0, 6.0),
+                        ),
+                        SizedBox(
+                          height: AppResponsive.h(context, 224).clamp(190.0, 240.0),
                           child: _AnimatedTopSection(
                             leftAnimation: _collageLeftAnimation,
                             rightAnimation: _collageRightAnimation,
@@ -266,23 +283,31 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
                           position: _logoAnimation,
                           child: const _PinterestRoundLogo(),
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(
+                          height: AppResponsive.h(context, 8).clamp(6.0, 10.0),
+                        ),
                         _AnimatedHeadline(
                           lineOneAnimation: _titleLineOneAnimation,
                           lineTwoAnimation: _titleLineTwoAnimation,
                           lineOneOpacity: _titleLineOneOpacity,
                           lineTwoOpacity: _titleLineTwoOpacity,
                         ),
-                        SizedBox(height: keyboardInset > 0 ? 12 : 18),
+                        SizedBox(
+                          height: keyboardInset > 0
+                              ? AppResponsive.h(context, 12).clamp(10.0, 14.0)
+                              : AppResponsive.h(context, 18).clamp(14.0, 20.0),
+                        ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: horizontalPadding,
+                          ),
                           child: Form(
                             key: _formKey,
                             child: TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               cursorColor: pinterestRed,
-                              decoration: _emailInputDecoration(),
+                              decoration: _emailInputDecoration(context),
                               validator: (value) {
                                 final String email = value?.trim() ?? '';
 
@@ -303,12 +328,16 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
                             ),
                           ),
                         ),
-                        const SizedBox(height: 14),
+                        SizedBox(
+                          height: AppResponsive.h(context, 14).clamp(10.0, 16.0),
+                        ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: horizontalPadding,
+                          ),
                           child: SizedBox(
                             width: double.infinity,
-                            height: 46,
+                            height: AppResponsive.h(context, 46).clamp(42.0, 50.0),
                             child: ElevatedButton(
                               onPressed: _isChecking ? null : _handleContinue,
                               style: ElevatedButton.styleFrom(
@@ -316,58 +345,76 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
                                 foregroundColor: Colors.white,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18),
+                                  borderRadius: BorderRadius.circular(
+                                    AppResponsive.r(context, 18).clamp(16.0, 20.0),
+                                  ),
                                 ),
                               ),
                               child: _isChecking
-                                  ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
+                                  ? SizedBox(
+                                width: AppResponsive.r(context, 20)
+                                    .clamp(18.0, 22.0),
+                                height: AppResponsive.r(context, 20)
+                                    .clamp(18.0, 22.0),
+                                child: const CircularProgressIndicator(
                                   strokeWidth: 2.2,
                                   color: Colors.white,
                                 ),
                               )
-                                  : const Text(
+                                  : Text(
                                 'Continue',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: AppResponsive.sp(context, 16)
+                                      .clamp(14.0, 17.0),
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        SizedBox(
+                          height: AppResponsive.h(context, 12).clamp(10.0, 14.0),
+                        ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 28),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: horizontalPadding,
+                          ),
                           child: SizedBox(
                             width: double.infinity,
-                            height: 50,
+                            height: AppResponsive.h(context, 50).clamp(46.0, 54.0),
                             child: OutlinedButton(
                               onPressed: () {},
                               style: OutlinedButton.styleFrom(
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.black,
-                                side: const BorderSide(
+                                side: BorderSide(
                                   color: googleBorderColor,
-                                  width: 1.2,
+                                  width: AppResponsive.r(context, 1.2)
+                                      .clamp(1.0, 1.4),
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18),
+                                  borderRadius: BorderRadius.circular(
+                                    AppResponsive.r(context, 18).clamp(16.0, 20.0),
+                                  ),
                                 ),
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 16),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: AppResponsive.w(context, 16)
+                                      .clamp(14.0, 18.0),
+                                ),
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  GoogleIcon(),
-                                  SizedBox(width: 12),
+                                children: [
+                                  const GoogleIcon(),
+                                  SizedBox(
+                                    width: AppResponsive.w(context, 12)
+                                        .clamp(8.0, 14.0),
+                                  ),
                                   Text(
                                     'Continue with Google',
                                     style: TextStyle(
-                                      fontSize: 15.5,
+                                      fontSize: AppResponsive.sp(context, 15.5)
+                                          .clamp(13.5, 16.5),
                                       fontWeight: FontWeight.w700,
                                       color: Colors.black,
                                     ),
@@ -377,20 +424,25 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
                             ),
                           ),
                         ),
-                        const SizedBox(height: 14),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 38),
+                        SizedBox(
+                          height: AppResponsive.h(context, 14).clamp(10.0, 16.0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal:
+                            AppResponsive.w(context, 38).clamp(28.0, 42.0),
+                          ),
                           child: Text.rich(
                             TextSpan(
-                              text:
-                              'Facebook login is no longer\navailable. ',
+                              text: 'Facebook login is no longer\navailable. ',
                               style: TextStyle(
-                                fontSize: 13.5,
+                                fontSize: AppResponsive.sp(context, 13.5)
+                                    .clamp(12.0, 14.5),
                                 color: Colors.black,
                                 height: 1.35,
                                 fontWeight: FontWeight.w400,
                               ),
-                              children: [
+                              children: const [
                                 TextSpan(
                                   text: 'Recover your account',
                                   style: TextStyle(
@@ -404,23 +456,26 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
                         ),
                         const Spacer(),
                         if (keyboardInset == 0) ...[
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 28),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal:
+                              AppResponsive.w(context, 28).clamp(22.0, 32.0),
+                            ),
                             child: Text.rich(
                               TextSpan(
-                                text:
-                                'By continuing, you agree to Pinterest\'s ',
+                                text: 'By continuing, you agree to Pinterest\'s ',
                                 style: TextStyle(
-                                  fontSize: 10.8,
-                                  color: Color(0xFF222222),
+                                  fontSize: AppResponsive.sp(context, 10.8)
+                                      .clamp(9.5, 11.5),
+                                  color: const Color(0xFF222222),
                                   height: 1.4,
                                 ),
-                                children: [
+                                children: const [
                                   TextSpan(
-                                      text: 'Terms of\n',
-                                      style: TextStyle(
-                                         decoration: TextDecoration.underline,
-                                      ),
+                                    text: 'Terms of\n',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                    ),
                                   ),
                                   TextSpan(
                                     text: 'Service',
@@ -450,18 +505,26 @@ class _EmailEntryScreenState extends ConsumerState<EmailEntryScreen>
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          const SizedBox(height: 6),
+                          SizedBox(
+                            height: AppResponsive.h(context, 6).clamp(4.0, 8.0),
+                          ),
                           Container(
-                            width: 115,
-                            height: 4,
+                            width: AppResponsive.w(context, 115).clamp(90.0, 120.0),
+                            height: AppResponsive.h(context, 4).clamp(3.0, 5.0),
                             decoration: BoxDecoration(
                               color: const Color(0xFF595959),
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(
+                                AppResponsive.r(context, 20).clamp(12.0, 20.0),
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 6),
+                          SizedBox(
+                            height: AppResponsive.h(context, 6).clamp(4.0, 8.0),
+                          ),
                         ] else ...[
-                          const SizedBox(height: 16),
+                          SizedBox(
+                            height: AppResponsive.h(context, 16).clamp(12.0, 18.0),
+                          ),
                         ],
                       ],
                     ),
@@ -508,7 +571,7 @@ class _AnimatedTopSection extends StatelessWidget {
               child: const PositionedFillSafe(
                 child: Stack(
                   clipBehavior: Clip.none,
-                  children: const [
+                  children: [
                     Positioned(
                       right: 100,
                       top: 75,
@@ -548,7 +611,7 @@ class _AnimatedTopSection extends StatelessWidget {
               child: const PositionedFillSafe(
                 child: Stack(
                   clipBehavior: Clip.none,
-                  children: const [
+                  children: [
                     Positioned(
                       left: -10,
                       top: -50,
@@ -605,6 +668,11 @@ class _AnimatedHeadline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double titleFont =
+    AppResponsive.sp(context, 28).clamp(23.0, 30.0);
+    final double horizontalPadding =
+    AppResponsive.w(context, 24).clamp(18.0, 28.0);
+
     return Column(
       children: [
         ClipRect(
@@ -612,18 +680,18 @@ class _AnimatedHeadline extends StatelessWidget {
             opacity: lineOneOpacity,
             child: SlideTransition(
               position: lineOneAnimation,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 child: Text(
                   'Create a life',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                  height: 1.1,
-                  letterSpacing: -0.2,
-                ),
+                    fontSize: titleFont,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                    height: 1.1,
+                    letterSpacing: -0.2,
+                  ),
                 ),
               ),
             ),
@@ -634,13 +702,13 @@ class _AnimatedHeadline extends StatelessWidget {
             opacity: lineTwoOpacity,
             child: SlideTransition(
               position: lineTwoAnimation,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 child: Text(
                   'you love',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 28,
+                    fontSize: titleFont,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                     height: 1.1,
@@ -685,12 +753,19 @@ class _CollageImageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double responsiveWidth =
+    AppResponsive.w(context, width).clamp(width * 0.8, width * 1.1);
+    final double responsiveHeight =
+    AppResponsive.h(context, height).clamp(height * 0.8, height * 1.1);
+    final double responsiveRadius =
+    AppResponsive.r(context, radius).clamp(radius * 0.85, radius * 1.1);
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
+      borderRadius: BorderRadius.circular(responsiveRadius),
       child: Image.asset(
         imagePath,
-        width: width,
-        height: height,
+        width: responsiveWidth,
+        height: responsiveHeight,
         fit: BoxFit.cover,
       ),
     );
@@ -702,11 +777,13 @@ class _PinterestRoundLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double size = AppResponsive.r(context, 70).clamp(58.0, 76.0);
+
     return SizedBox(
       child: Image.asset(
         'assets/images/pinterest_splash_logo.png',
-        width: 70,
-        height: 70,
+        width: size,
+        height: size,
       ),
     );
   }

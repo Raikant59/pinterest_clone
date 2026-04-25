@@ -72,8 +72,6 @@ class AuthController extends Notifier<AuthSession> {
       await ref.read(emailLookupServiceProvider).saveRegisteredEmail(email);
       ref.read(signupDraftProvider.notifier).clear();
 
-      // Do not mark unauthenticated here.
-      // Wait for ClerkSessionBridge -> syncFromClerk().
       return true;
     } catch (error) {
       state = AuthSession.unauthenticated(
@@ -93,7 +91,6 @@ class AuthController extends Notifier<AuthSession> {
       await ref.read(authRepositoryProvider).signOut();
       ref.read(signupDraftProvider.notifier).clear();
 
-      // Bridge will sync final signed-out state
       state = const AuthSession.unauthenticated(
         isSubmitting: false,
       );

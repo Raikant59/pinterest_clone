@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../features/home/model/home_feed_item.dart';
+import '../utils/app_responsive.dart';
 
 class PinDetailScreen extends StatelessWidget {
   final HomeFeedItem item;
@@ -38,6 +38,23 @@ class PinDetailScreen extends StatelessWidget {
     final title = _buildTitle();
     final creator = _buildCreatorName();
 
+    final double outerHorizontal =
+    AppResponsive.w(context, 8).clamp(6.0, 12.0);
+    final double topPadding =
+    AppResponsive.h(context, 8).clamp(6.0, 10.0);
+    final double titleHorizontal =
+    AppResponsive.w(context, 12).clamp(10.0, 16.0);
+    final double betweenHeroAndActions =
+    AppResponsive.h(context, 14).clamp(10.0, 16.0);
+    final double betweenActionsAndCreator =
+    AppResponsive.h(context, 16).clamp(12.0, 18.0);
+    final double betweenCreatorAndTitle =
+    AppResponsive.h(context, 8).clamp(6.0, 10.0);
+    final double betweenTitleAndExplore =
+    AppResponsive.h(context, 18).clamp(14.0, 20.0);
+    final double betweenExploreAndGrid =
+    AppResponsive.h(context, 14).clamp(10.0, 16.0);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F4),
       body: SafeArea(
@@ -46,22 +63,28 @@ class PinDetailScreen extends StatelessWidget {
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                padding: EdgeInsets.fromLTRB(
+                  outerHorizontal,
+                  topPadding,
+                  outerHorizontal,
+                  0,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _PinHeroSection(item: item),
-                    const SizedBox(height: 14),
-                    _PinActionRow(),
-                    const SizedBox(height: 16),
+                    SizedBox(height: betweenHeroAndActions),
+                    const _PinActionRow(),
+                    SizedBox(height: betweenActionsAndCreator),
                     _CreatorRow(creatorName: creator),
-                    const SizedBox(height: 8),
+                    SizedBox(height: betweenCreatorAndTitle),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      padding: EdgeInsets.symmetric(horizontal: titleHorizontal),
                       child: Text(
                         title,
-                        style: const TextStyle(
-                          fontSize: 18,
+                        style: TextStyle(
+                          fontSize: AppResponsive.sp(context, 18)
+                              .clamp(16.0, 20.0),
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
                           height: 1.1,
@@ -69,26 +92,32 @@ class PinDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 18),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
+                    SizedBox(height: betweenTitleAndExplore),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: titleHorizontal),
                       child: Text(
                         'More to explore',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: AppResponsive.sp(context, 20)
+                              .clamp(18.0, 22.0),
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
                           letterSpacing: -0.4,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 14),
+                    SizedBox(height: betweenExploreAndGrid),
                   ],
                 ),
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 28),
+              padding: EdgeInsets.fromLTRB(
+                outerHorizontal,
+                0,
+                outerHorizontal,
+                AppResponsive.h(context, 28).clamp(20.0, 32.0),
+              ),
               sliver: SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                       (context, index) {
@@ -97,10 +126,12 @@ class PinDetailScreen extends StatelessWidget {
                   },
                   childCount: relatedItems.length,
                 ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
+                  crossAxisSpacing:
+                  AppResponsive.w(context, 10).clamp(8.0, 12.0),
+                  mainAxisSpacing:
+                  AppResponsive.h(context, 10).clamp(8.0, 12.0),
                   childAspectRatio: 0.72,
                 ),
               ),
@@ -121,8 +152,25 @@ class _PinHeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double radius =
+    AppResponsive.r(context, 26).clamp(20.0, 28.0);
+    final double topInset =
+    AppResponsive.h(context, 14).clamp(10.0, 16.0);
+    final double leftInset =
+    AppResponsive.w(context, 14).clamp(10.0, 16.0);
+    final double rightInset =
+    AppResponsive.w(context, 12).clamp(10.0, 14.0);
+    final double bottomInset =
+    AppResponsive.h(context, 10).clamp(8.0, 12.0);
+    final double searchBoxSize =
+    AppResponsive.r(context, 48).clamp(42.0, 52.0);
+    final double searchBoxRadius =
+    AppResponsive.r(context, 18).clamp(14.0, 20.0);
+    final double searchIconSize =
+    AppResponsive.r(context, 24).clamp(20.0, 26.0);
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(26),
+      borderRadius: BorderRadius.circular(radius),
       child: Stack(
         children: [
           AspectRatio(
@@ -141,9 +189,9 @@ class _PinHeroSection extends StatelessWidget {
                 return Container(
                   color: const Color(0xFFEAEAEA),
                   alignment: Alignment.center,
-                  child: const Icon(
+                  child: Icon(
                     Icons.broken_image_outlined,
-                    size: 42,
+                    size: AppResponsive.r(context, 42).clamp(34.0, 46.0),
                     color: Colors.grey,
                   ),
                 );
@@ -151,27 +199,27 @@ class _PinHeroSection extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 14,
-            left: 14,
+            top: topInset,
+            left: leftInset,
             child: _TopCircleIcon(
               icon: Icons.arrow_back_ios_new,
               onTap: () => Navigator.pop(context),
             ),
           ),
           Positioned(
-            right: 12,
-            bottom: 10,
+            right: rightInset,
+            bottom: bottomInset,
             child: Container(
-              width: 48,
-              height: 48,
+              width: searchBoxSize,
+              height: searchBoxSize,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.96),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(searchBoxRadius),
               ),
               alignment: Alignment.center,
-              child: const Icon(
+              child: Icon(
                 Icons.search_outlined,
-                size: 24,
+                size: searchIconSize,
                 color: Colors.black,
               ),
             ),
@@ -193,18 +241,25 @@ class _TopCircleIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double boxSize =
+    AppResponsive.r(context, 48).clamp(42.0, 52.0);
+    final double iconSize =
+    AppResponsive.r(context, 24).clamp(20.0, 26.0);
+    final double radius =
+    AppResponsive.r(context, 22).clamp(18.0, 24.0);
+
     return Material(
       color: Colors.white.withOpacity(0.72),
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: BorderRadius.circular(radius),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(radius),
         child: SizedBox(
-          width: 48,
-          height: 48,
+          width: boxSize,
+          height: boxSize,
           child: Icon(
             icon,
-            size: 24,
+            size: iconSize,
             color: Colors.black,
           ),
         ),
@@ -214,39 +269,64 @@ class _TopCircleIcon extends StatelessWidget {
 }
 
 class _PinActionRow extends StatelessWidget {
+  const _PinActionRow();
+
   @override
   Widget build(BuildContext context) {
+    final double horizontal =
+    AppResponsive.w(context, 10).clamp(8.0, 12.0);
+    final double smallIconSize =
+    AppResponsive.r(context, 21).clamp(18.0, 23.0);
+    final double countSize =
+    AppResponsive.sp(context, 15).clamp(13.0, 16.0);
+    final double gapSmall =
+    AppResponsive.w(context, 10).clamp(8.0, 12.0);
+    final double gapLarge =
+    AppResponsive.w(context, 26).clamp(18.0, 28.0);
+    final double saveHorizontal =
+    AppResponsive.w(context, 20).clamp(16.0, 24.0);
+    final double saveVertical =
+    AppResponsive.h(context, 12).clamp(10.0, 14.0);
+    final double saveRadius =
+    AppResponsive.r(context, 18).clamp(16.0, 20.0);
+    final double saveFont =
+    AppResponsive.sp(context, 15).clamp(13.0, 16.0);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: horizontal),
       child: Row(
         children: [
-          const Icon(Icons.favorite_border, size: 21, color: Colors.black),
-          const SizedBox(width: 10),
-          const Text(
+          Icon(Icons.favorite_border, size: smallIconSize, color: Colors.black),
+          SizedBox(width: gapSmall),
+          Text(
             '23',
             style: TextStyle(
-              fontSize: 15,
+              fontSize: countSize,
               fontWeight: FontWeight.w700,
               color: Colors.black,
             ),
           ),
-          const SizedBox(width: 26),
-          const Icon(Icons.mode_comment_outlined, size: 21, color: Colors.black),
-          const SizedBox(width: 26),
-          const Icon(Icons.share_outlined, size: 21, color: Colors.black),
-          const SizedBox(width: 26),
-          const Icon(Icons.more_horiz, size: 21, color: Colors.black),
+          SizedBox(width: gapLarge),
+          Icon(Icons.mode_comment_outlined,
+              size: smallIconSize, color: Colors.black),
+          SizedBox(width: gapLarge),
+          Icon(Icons.share_outlined, size: smallIconSize, color: Colors.black),
+          SizedBox(width: gapLarge),
+          Icon(Icons.more_horiz, size: smallIconSize, color: Colors.black),
           const Spacer(),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: EdgeInsets.symmetric(
+              horizontal: saveHorizontal,
+              vertical: saveVertical,
+            ),
             decoration: BoxDecoration(
               color: const Color(0xFFE60023),
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(saveRadius),
             ),
-            child: const Text(
+            child: Text(
               'Save',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: saveFont,
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
               ),
@@ -269,13 +349,30 @@ class _CreatorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final letter = creatorName.isNotEmpty ? creatorName[0].toUpperCase() : 'P';
 
+    final double horizontal =
+    AppResponsive.w(context, 12).clamp(10.0, 16.0);
+    final double avatarSize =
+    AppResponsive.r(context, 24).clamp(22.0, 28.0);
+    final double avatarFont =
+    AppResponsive.sp(context, 12).clamp(11.0, 13.0);
+    final double gap =
+    AppResponsive.w(context, 6).clamp(4.0, 8.0);
+    final double nameSize =
+    AppResponsive.sp(context, 12).clamp(11.0, 13.0);
+    final double trailingSize =
+    AppResponsive.r(context, 32).clamp(28.0, 34.0);
+    final double trailingRadius =
+    AppResponsive.r(context, 14).clamp(12.0, 16.0);
+    final double trailingIcon =
+    AppResponsive.r(context, 18).clamp(16.0, 20.0);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: EdgeInsets.symmetric(horizontal: horizontal),
       child: Row(
         children: [
           Container(
-            width: 24,
-            height: 24,
+            width: avatarSize,
+            height: avatarSize,
             decoration: const BoxDecoration(
               color: Color(0xFF5A69C7),
               shape: BoxShape.circle,
@@ -283,35 +380,35 @@ class _CreatorRow extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               letter,
-              style: const TextStyle(
-                fontSize: 12,
+              style: TextStyle(
+                fontSize: avatarFont,
                 fontWeight: FontWeight.w700,
                 color: Colors.white,
               ),
             ),
           ),
-          const SizedBox(width: 6),
+          SizedBox(width: gap),
           Expanded(
             child: Text(
               creatorName,
-              style: const TextStyle(
-                fontSize: 12,
+              style: TextStyle(
+                fontSize: nameSize,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
               ),
             ),
           ),
           Container(
-            width: 32,
-            height: 32,
+            width: trailingSize,
+            height: trailingSize,
             decoration: BoxDecoration(
               color: const Color(0xFFE9E9E2),
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(trailingRadius),
             ),
             alignment: Alignment.center,
-            child: const Icon(
+            child: Icon(
               Icons.keyboard_arrow_down,
-              size: 18,
+              size: trailingIcon,
               color: Colors.black,
             ),
           ),
@@ -338,8 +435,23 @@ class _RelatedPinCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double radius =
+    AppResponsive.r(context, 22).clamp(18.0, 24.0);
+    final double overlayHorizontal =
+    AppResponsive.w(context, 12).clamp(8.0, 12.0);
+    final double overlayBottom =
+    AppResponsive.h(context, 12).clamp(8.0, 12.0);
+    final double overlayInnerHorizontal =
+    AppResponsive.w(context, 10).clamp(8.0, 12.0);
+    final double overlayInnerVertical =
+    AppResponsive.h(context, 8).clamp(6.0, 9.0);
+    final double overlayRadius =
+    AppResponsive.r(context, 14).clamp(12.0, 16.0);
+    final double titleSize =
+    AppResponsive.sp(context, 13).clamp(11.0, 13.5);
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: BorderRadius.circular(radius),
       child: Stack(
         children: [
           Positioned.fill(
@@ -357,27 +469,33 @@ class _RelatedPinCard extends StatelessWidget {
                 return Container(
                   color: const Color(0xFFEAEAEA),
                   alignment: Alignment.center,
-                  child: const Icon(Icons.broken_image_outlined),
+                  child: Icon(
+                    Icons.broken_image_outlined,
+                    size: AppResponsive.r(context, 24).clamp(20.0, 28.0),
+                  ),
                 );
               },
             ),
           ),
           Positioned(
-            left: 12,
-            right: 12,
-            bottom: 12,
+            left: overlayHorizontal,
+            right: overlayHorizontal,
+            bottom: overlayBottom,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              padding: EdgeInsets.symmetric(
+                horizontal: overlayInnerHorizontal,
+                vertical: overlayInnerVertical,
+              ),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.28),
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(overlayRadius),
               ),
               child: Text(
                 _title(),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 13,
+                style: TextStyle(
+                  fontSize: titleSize,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                   height: 1.2,

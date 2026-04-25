@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
+import '../../../utils/app_responsive.dart';
 import '../model/search_board_item.dart';
 
 class SearchTopBanner extends StatelessWidget {
@@ -16,8 +16,13 @@ class SearchTopBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double bannerHeight =
+    AppResponsive.h(context, 350).clamp(300.0, 380.0);
+    final double errorIconSize =
+    AppResponsive.r(context, 28).clamp(22.0, 32.0);
+
     return SizedBox(
-      height: 350,
+      height: bannerHeight,
       child: PageView.builder(
         controller: controller,
         itemCount: items.length,
@@ -44,7 +49,10 @@ class SearchTopBanner extends StatelessWidget {
                     return Container(
                       color: const Color(0xFFEAEAEA),
                       alignment: Alignment.center,
-                      child: const Icon(Icons.broken_image_outlined),
+                      child: Icon(
+                        Icons.broken_image_outlined,
+                        size: errorIconSize,
+                      ),
                     );
                   },
                 ),
@@ -53,10 +61,7 @@ class SearchTopBanner extends StatelessWidget {
                 ),
                 const Positioned.fill(
                   child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 34),
-                      child: _BannerText(),
-                    ),
+                    child: _BannerText(),
                   ),
                 ),
               ],
@@ -73,31 +78,43 @@ class _BannerText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: const [
-        Text(
-          'On the menu',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: Colors.white70,
+    final double horizontalPadding =
+    AppResponsive.w(context, 34).clamp(24.0, 38.0);
+    final double subtitleSize =
+    AppResponsive.sp(context, 15).clamp(13.0, 16.0);
+    final double subtitleGap =
+    AppResponsive.h(context, 6).clamp(4.0, 8.0);
+    final double titleSize =
+    AppResponsive.sp(context, 20).clamp(18.0, 22.0);
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'On the menu',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: subtitleSize,
+              fontWeight: FontWeight.w600,
+              color: Colors.white70,
+            ),
           ),
-        ),
-        SizedBox(height: 6),
-        Text(
-          'Vegetarian recipes to make\non repeat',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w400,
-            color: Colors.white,
-            height: 1.2,
-            letterSpacing: -0.4,
+          SizedBox(height: subtitleGap),
+          Text(
+            'Vegetarian recipes to make\non repeat',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: titleSize,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+              height: 1.2,
+              letterSpacing: -0.4,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

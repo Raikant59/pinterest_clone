@@ -4,6 +4,8 @@ import 'package:pinterest_clone/screens/SignUp Screens/widgets/progress_dots.dar
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/features/auth/state/providers.dart';
 
+import '../../utils/app_responsive.dart';
+
 class CreateNameScreen extends ConsumerStatefulWidget {
   const CreateNameScreen({super.key});
 
@@ -63,13 +65,13 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
     }
   }
 
-  InputDecoration _nameDecoration() {
-    return const InputDecoration(
+  InputDecoration _nameDecoration(BuildContext context) {
+    return InputDecoration(
       border: InputBorder.none,
       hintText: 'Full name',
       hintStyle: TextStyle(
         color: hintColor,
-        fontSize: 15,
+        fontSize: AppResponsive.sp(context, 15).clamp(13.0, 16.0),
         fontWeight: FontWeight.w400,
         letterSpacing: -0.2,
       ),
@@ -82,6 +84,17 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
   Widget build(BuildContext context) {
     final double keyboardInset = MediaQuery.of(context).viewInsets.bottom;
 
+    final double horizontalPadding =
+    AppResponsive.w(context, 18).clamp(14.0, 22.0);
+    final double topGap =
+    AppResponsive.h(context, 10).clamp(8.0, 12.0);
+    final double titleGap =
+    AppResponsive.h(context, 4).clamp(2.0, 6.0);
+    final double fieldGap =
+    AppResponsive.h(context, 18).clamp(14.0, 20.0);
+    final double buttonBottomGap =
+    AppResponsive.h(context, 8).clamp(6.0, 10.0);
+
     return Scaffold(
       backgroundColor: screenBackground,
       resizeToAvoidBottomInset: true,
@@ -90,27 +103,32 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
           builder: (context, constraints) {
             return SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              padding: EdgeInsets.only(bottom: keyboardInset > 0 ? 20 : 0),
+              padding: EdgeInsets.only(
+                bottom: keyboardInset > 0
+                    ? AppResponsive.h(context, 20).clamp(14.0, 24.0)
+                    : 0,
+              ),
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: IntrinsicHeight(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 10),
-
+                      SizedBox(height: topGap),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                         child: Row(
                           children: [
                             IconButton(
                               onPressed: () => context.pop(),
                               padding: EdgeInsets.zero,
-                              splashRadius: 20,
-                              icon: const Icon(
+                              splashRadius: AppResponsive.r(context, 20)
+                                  .clamp(18.0, 22.0),
+                              icon: Icon(
                                 Icons.arrow_back_ios_new,
-                                size: 24,
-                                color: Color(0xFF66665E),
+                                size: AppResponsive.r(context, 24)
+                                    .clamp(20.0, 26.0),
+                                color: const Color(0xFF66665E),
                               ),
                             ),
                             const Expanded(
@@ -122,41 +140,45 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 40),
+                            SizedBox(
+                              width: AppResponsive.w(context, 40)
+                                  .clamp(32.0, 44.0),
+                            ),
                           ],
                         ),
                       ),
-
-                      const SizedBox(height: 4),
-
-                      const Center(
+                      SizedBox(height: titleGap),
+                      Center(
                         child: Text(
                           "What's your name?",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize:
+                            AppResponsive.sp(context, 20).clamp(18.0, 22.0),
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
                             letterSpacing: -0.8,
                           ),
                         ),
                       ),
-
-                      const SizedBox(height: 18),
-
+                      SizedBox(height: fieldGap),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                         child: Container(
-                          height: 60,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18,
-                            vertical: 12,
+                          height: AppResponsive.h(context, 60).clamp(54.0, 64.0),
+                          padding: EdgeInsets.symmetric(
+                            horizontal:
+                            AppResponsive.w(context, 18).clamp(14.0, 20.0),
+                            vertical:
+                            AppResponsive.h(context, 12).clamp(10.0, 14.0),
                           ),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
+                            borderRadius: BorderRadius.circular(
+                              AppResponsive.r(context, 24).clamp(20.0, 26.0),
+                            ),
                             border: Border.all(
                               color: borderColor,
-                              width: 2,
+                              width: AppResponsive.r(context, 2).clamp(1.5, 2.2),
                             ),
                           ),
                           child: Row(
@@ -164,13 +186,14 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
                               Expanded(
                                 child: TextField(
                                   controller: _nameController,
-                                  style: const TextStyle(
-                                    fontSize: 16,
+                                  style: TextStyle(
+                                    fontSize: AppResponsive.sp(context, 16)
+                                        .clamp(14.0, 17.0),
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                     letterSpacing: -0.2,
                                   ),
-                                  decoration: _nameDecoration(),
+                                  decoration: _nameDecoration(context),
                                 ),
                               ),
                               if (_hasName)
@@ -178,12 +201,19 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
                                   onTap: () {
                                     _nameController.clear();
                                   },
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(6),
+                                  borderRadius: BorderRadius.circular(
+                                    AppResponsive.r(context, 30)
+                                        .clamp(24.0, 32.0),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(
+                                      AppResponsive.r(context, 6)
+                                          .clamp(4.0, 7.0),
+                                    ),
                                     child: Icon(
                                       Icons.cancel_outlined,
-                                      size: 26,
+                                      size: AppResponsive.r(context, 26)
+                                          .clamp(22.0, 28.0),
                                       color: Colors.black,
                                     ),
                                   ),
@@ -192,14 +222,12 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
                           ),
                         ),
                       ),
-
                       const Spacer(),
-
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                         child: SizedBox(
                           width: double.infinity,
-                          height: 54,
+                          height: AppResponsive.h(context, 54).clamp(48.0, 58.0),
                           child: ElevatedButton(
                             onPressed: _hasName ? _handleNext : null,
                             style: ElevatedButton.styleFrom(
@@ -211,13 +239,16 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
                               disabledBackgroundColor: disabledButton,
                               disabledForegroundColor: disabledText,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
+                                borderRadius: BorderRadius.circular(
+                                  AppResponsive.r(context, 24).clamp(20.0, 26.0),
+                                ),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'Sign Up',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: AppResponsive.sp(context, 16)
+                                    .clamp(14.0, 17.0),
                                 fontWeight: FontWeight.w500,
                                 letterSpacing: -0.2,
                               ),
@@ -225,7 +256,7 @@ class _CreateNameScreenState extends ConsumerState<CreateNameScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: buttonBottomGap),
                     ],
                   ),
                 ),

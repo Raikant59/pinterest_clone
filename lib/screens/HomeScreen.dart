@@ -9,6 +9,7 @@ import '../features/home/widgets/home_feed_loading_grid.dart';
 import '../features/home/widgets/home_pin_card.dart';
 import '../features/home/widgets/personalized_button.dart';
 import '../routes/route_transition.dart';
+import '../utils/app_responsive.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -23,7 +24,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _showRefreshHeader = false;
   double _pullExtent = 0;
   bool _refreshTriggered = false;
-  int _bottomNavIndex = 0;
 
   @override
   void initState() {
@@ -35,7 +35,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final position = _scrollController.position;
     final state = ref.read(homeFeedControllerProvider);
 
-    if (position.pixels >= position.maxScrollExtent - 300) {
+    final double loadMoreTrigger =
+    AppResponsive.h(context, 300).clamp(240.0, 340.0);
+
+    if (position.pixels >= position.maxScrollExtent - loadMoreTrigger) {
       ref.read(homeFeedControllerProvider.notifier).loadMore();
     }
 
@@ -75,28 +78,35 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _handleScrollNotification(ScrollNotification notification) {
     if (notification.metrics.axis != Axis.vertical) return false;
 
+    final double maxPull =
+    AppResponsive.h(context, 42).clamp(36.0, 46.0);
+    final double showThreshold =
+    AppResponsive.h(context, 6).clamp(5.0, 7.0);
+    final double triggerThreshold =
+    AppResponsive.h(context, 32).clamp(28.0, 34.0);
+
     if (notification.metrics.pixels <= 0) {
       if (notification is OverscrollNotification && !_refreshTriggered) {
         setState(() {
           _pullExtent =
-              (_pullExtent + notification.overscroll.abs()).clamp(0.0, 42.0);
-          _showRefreshHeader = _pullExtent > 6;
+              (_pullExtent + notification.overscroll.abs()).clamp(0.0, maxPull);
+          _showRefreshHeader = _pullExtent > showThreshold;
         });
       }
 
       if (notification is ScrollUpdateNotification &&
           notification.dragDetails != null &&
           !_refreshTriggered) {
-        final overscroll = (-notification.metrics.pixels).clamp(0.0, 42.0);
+        final overscroll = (-notification.metrics.pixels).clamp(0.0, maxPull);
         setState(() {
           _pullExtent = overscroll;
-          _showRefreshHeader = overscroll > 6;
+          _showRefreshHeader = overscroll > showThreshold;
         });
       }
     }
 
     if (notification is ScrollEndNotification) {
-      if (_pullExtent >= 32 && !_refreshTriggered) {
+      if (_pullExtent >= triggerThreshold && !_refreshTriggered) {
         _handleRefresh();
       } else if (!_refreshTriggered) {
         setState(() {
@@ -110,14 +120,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   double _itemHeightForIndex(int index) {
-    const heights = [420.0, 285.0, 250.0, 360.0, 260.0, 390.0, 240.0, 330.0];
-    return heights[index % heights.length];
-  }
-
-  void _handleBottomNavTap(int index) {
-    setState(() {
-      _bottomNavIndex = index;
-    });
+    final double scale = AppResponsive.scale(context).clamp(0.9, 1.08);
+    const baseHeights = [420.0, 285.0, 250.0, 360.0, 260.0, 390.0, 240.0, 330.0];
+    return baseHeights[index % baseHeights.length] * scale;
   }
 
   @override
@@ -132,46 +137,69 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(homeFeedControllerProvider);
 
+    final double outerHorizontal =
+    AppResponsive.w(context, 8).clamp(6.0, 10.0);
+    final double headerTop =
+    AppResponsive.h(context, 8).clamp(6.0, 10.0);
+    final double headerBottom =
+    AppResponsive.h(context, 14).clamp(10.0, 16.0);
+    final double refreshMaxHeight =
+    AppResponsive.h(context, 42).clamp(36.0, 46.0);
+    final double refreshBottomPadding =
+    AppResponsive.h(context, 4).clamp(2.0, 6.0);
+    final double gridBottom =
+    AppResponsive.h(context, 100).clamp(84.0, 110.0);
+    final double gridSpacing =
+    AppResponsive.w(context, 10).clamp(8.0, 12.0);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F4),
       body: SafeArea(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 14),
+              padding: EdgeInsets.fromLTRB(
+                outerHorizontal,
+                headerTop,
+                outerHorizontal,
+                headerBottom,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 15, left: 8),
-                      child: _ForYouHeader(),
+                      padding: EdgeInsets.only(
+                        top: AppResponsive.h(context, 15).clamp(12.0, 16.0),
+                        left: AppResponsive.w(context, 8).clamp(6.0, 10.0),
+                      ),
+                      child: const _ForYouHeader(),
                     ),
                   ),
-                  PersonalizedIcon(),
+                  const PersonalizedIcon(),
                 ],
               ),
             ),
-
             AnimatedContainer(
               duration: const Duration(milliseconds: 180),
               curve: Curves.easeOut,
               height: _showRefreshHeader
-                  ? (_refreshTriggered ? 42 : _pullExtent.clamp(0.0, 42.0))
+                  ? (_refreshTriggered
+                  ? refreshMaxHeight
+                  : _pullExtent.clamp(0.0, refreshMaxHeight))
                   : 0,
               alignment: Alignment.center,
               child: Opacity(
                 opacity: _showRefreshHeader ? 1 : 0,
-                child: const Padding(
-                  padding: EdgeInsets.only(bottom: 4),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: refreshBottomPadding),
                   child: FourDotRefreshLoader(
-                    size: 30,
-                    dotSize: 6.5,
+                    size: AppResponsive.r(context, 30).clamp(26.0, 32.0),
+                    dotSize: AppResponsive.r(context, 6.5).clamp(5.5, 7.0),
                   ),
                 ),
               ),
             ),
-
             Expanded(
               child: NotificationListener<ScrollNotification>(
                 onNotification: _handleScrollNotification,
@@ -184,12 +212,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     if (state.isInitialLoading)
                       const HomeFeedLoadingGrid()
                     else if (state.items.isEmpty)
-                      const SliverFillRemaining(
+                      SliverFillRemaining(
                         child: Center(
                           child: Text(
                             'No images found',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize:
+                              AppResponsive.sp(context, 16).clamp(14.0, 17.0),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -197,11 +226,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       )
                     else
                       SliverPadding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 100),
+                        padding: EdgeInsets.fromLTRB(
+                          outerHorizontal,
+                          0,
+                          outerHorizontal,
+                          gridBottom,
+                        ),
                         sliver: SliverMasonryGrid.count(
                           crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
+                          mainAxisSpacing: gridSpacing,
+                          crossAxisSpacing: gridSpacing,
                           childCount: state.items.length,
                           itemBuilder: (context, index) {
                             final item = state.items[index];
@@ -244,24 +278,33 @@ class _ForYouHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double titleSize =
+    AppResponsive.sp(context, 16).clamp(14.0, 17.0);
+    final double gap =
+    AppResponsive.h(context, 1).clamp(1.0, 3.0);
+    final double underlineWidth =
+    AppResponsive.w(context, 52).clamp(44.0, 56.0);
+    final double underlineThickness =
+    AppResponsive.h(context, 2).clamp(1.5, 2.5);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         Text(
           'For you',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: titleSize,
             fontWeight: FontWeight.w500,
             color: Colors.black,
             letterSpacing: -0.4,
           ),
         ),
-        SizedBox(height: 1),
+        SizedBox(height: gap),
         SizedBox(
-          width: 52,
+          width: underlineWidth,
           child: Divider(
-            thickness: 2,
-            height: 1,
+            thickness: underlineThickness,
+            height: underlineThickness,
             color: Colors.black,
           ),
         ),

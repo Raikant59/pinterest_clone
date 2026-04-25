@@ -64,16 +64,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'saved',
         builder: (context, state) => const SavedScreen(),
       ),
-      GoRoute(
-        path: AppRoutes.editProfile,
-        name: 'editProfile',
-        builder: (context, state) => const EditProfileScreen(),
-      ),
-      GoRoute(
-        path: AppRoutes.account,
-        name: 'account',
-        builder: (context, state) => const AccountScreen(),
-      ),
     ],
     redirect: (context, state) {
       final location = state.matchedLocation;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/app_responsive.dart';
 
 class HomeBottomNavBar extends StatelessWidget {
   const HomeBottomNavBar({
@@ -14,10 +15,20 @@ class HomeBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double navHeight =
+    AppResponsive.h(context, 78).clamp(68.0, 84.0);
+    final double topPadding =
+    AppResponsive.h(context, 6).clamp(4.0, 8.0);
+    final double bottomPadding =
+    AppResponsive.h(context, 6).clamp(4.0, 8.0);
+
     return Container(
-      height: 78,
+      height: navHeight,
       color: Colors.white,
-      padding: const EdgeInsets.only(top: 6, bottom: 6),
+      padding: EdgeInsets.only(
+        top: topPadding,
+        bottom: bottomPadding,
+      ),
       child: Row(
         children: [
           _NavItem(
@@ -77,6 +88,15 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double selectedIconSize =
+    AppResponsive.r(context, 29).clamp(24.0, 31.0);
+    final double unselectedIconSize =
+    AppResponsive.r(context, 27).clamp(22.0, 29.0);
+    final double labelSize =
+    AppResponsive.sp(context, 11).clamp(10.0, 12.5);
+    final double gap =
+    AppResponsive.h(context, 2).clamp(1.0, 4.0);
+
     return Expanded(
       child: InkWell(
         onTap: onTap,
@@ -87,14 +107,14 @@ class _NavItem extends StatelessWidget {
           children: [
             Icon(
               isSelected ? selectedIcon : unselectedIcon,
-              size: isSelected ? 29 : 27,
+              size: isSelected ? selectedIconSize : unselectedIconSize,
               color: Colors.black,
             ),
-            const SizedBox(height: 2),
+            SizedBox(height: gap),
             Text(
               label,
               style: TextStyle(
-                fontSize: 11,
+                fontSize: labelSize,
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
                 color: Colors.black,
               ),
@@ -121,6 +141,21 @@ class _SavedNavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double selectedSize =
+    AppResponsive.r(context, 30).clamp(26.0, 32.0);
+    final double unselectedSize =
+    AppResponsive.r(context, 28).clamp(24.0, 30.0);
+    final double borderWidth =
+    AppResponsive.r(context, 1.5).clamp(1.0, 2.0);
+    final double textSizeSelected =
+    AppResponsive.sp(context, 13).clamp(11.0, 14.0);
+    final double textSizeUnselected =
+    AppResponsive.sp(context, 12).clamp(10.0, 13.0);
+    final double labelSize =
+    AppResponsive.sp(context, 11).clamp(10.0, 12.5);
+    final double gap =
+    AppResponsive.h(context, 2).clamp(1.0, 4.0);
+
     return Expanded(
       child: InkWell(
         onTap: onTap,
@@ -130,30 +165,34 @@ class _SavedNavItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: isSelected ? 30 : 28,
-              height: isSelected ? 30 : 28,
+              width: isSelected ? selectedSize : unselectedSize,
+              height: isSelected ? selectedSize : unselectedSize,
               decoration: BoxDecoration(
                 color: const Color(0xFFB45ADC),
                 shape: BoxShape.circle,
                 border: isSelected
-                    ? Border.all(color: Colors.black, width: 1.5)
+                    ? Border.all(
+                  color: Colors.black,
+                  width: borderWidth,
+                )
                     : null,
               ),
               alignment: Alignment.center,
               child: Text(
                 letter,
                 style: TextStyle(
-                  fontSize: isSelected ? 13 : 12,
+                  fontSize:
+                  isSelected ? textSizeSelected : textSizeUnselected,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
               ),
             ),
-            const SizedBox(height: 2),
+            SizedBox(height: gap),
             Text(
               label,
               style: TextStyle(
-                fontSize: 11,
+                fontSize: labelSize,
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
                 color: Colors.black,
               ),

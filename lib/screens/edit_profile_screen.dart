@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
 import '../features/auth/state/providers.dart';
+import '../utils/app_responsive.dart';
 
 enum EditProfileTab { created, saved }
 
@@ -31,46 +30,62 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
     final String avatarLetter = userName[0].toUpperCase();
 
+    final double horizontalPadding =
+    AppResponsive.w(context, 26).clamp(18.0, 30.0);
+    final double topHorizontalPadding =
+    AppResponsive.w(context, 22).clamp(16.0, 26.0);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F4),
       body: SafeArea(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(22, 18, 22, 0),
+              padding: EdgeInsets.fromLTRB(
+                topHorizontalPadding,
+                AppResponsive.h(context, 18).clamp(14.0, 20.0),
+                topHorizontalPadding,
+                0,
+              ),
               child: Row(
                 children: [
                   InkWell(
                     onTap: () => Navigator.pop(context),
-                    borderRadius: BorderRadius.circular(16),
-                    child: const Icon(
+                    borderRadius: BorderRadius.circular(
+                      AppResponsive.r(context, 16).clamp(12.0, 18.0),
+                    ),
+                    child: Icon(
                       Icons.arrow_back_ios_new,
-                      size: 28,
+                      size: AppResponsive.r(context, 28).clamp(22.0, 30.0),
                       color: Colors.black,
                     ),
                   ),
                   const Spacer(),
                   InkWell(
                     onTap: () {},
-                    borderRadius: BorderRadius.circular(16),
-                    child: const Icon(
+                    borderRadius: BorderRadius.circular(
+                      AppResponsive.r(context, 16).clamp(12.0, 18.0),
+                    ),
+                    child: Icon(
                       Icons.share_outlined,
-                      size: 28,
+                      size: AppResponsive.r(context, 28).clamp(22.0, 30.0),
                       color: Colors.black,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 30),
+            SizedBox(
+              height: AppResponsive.h(context, 30).clamp(20.0, 34.0),
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 26),
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 56,
-                    height: 56,
+                    width: AppResponsive.r(context, 56).clamp(46.0, 60.0),
+                    height: AppResponsive.r(context, 56).clamp(46.0, 60.0),
                     decoration: const BoxDecoration(
                       color: Color(0xFFB44ED3),
                       shape: BoxShape.circle,
@@ -78,24 +93,29 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     alignment: Alignment.center,
                     child: Text(
                       avatarLetter,
-                      style: const TextStyle(
-                        fontSize: 28,
+                      style: TextStyle(
+                        fontSize: AppResponsive.sp(context, 28).clamp(22.0, 30.0),
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 22),
+                  SizedBox(
+                    width: AppResponsive.w(context, 22).clamp(14.0, 24.0),
+                  ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 8),
+                      padding: EdgeInsets.only(
+                        top: AppResponsive.h(context, 8).clamp(6.0, 10.0),
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             userName,
-                            style: const TextStyle(
-                              fontSize: 16,
+                            style: TextStyle(
+                              fontSize: AppResponsive.sp(context, 16)
+                                  .clamp(14.0, 17.0),
                               fontWeight: FontWeight.w600,
                               color: Colors.black,
                               letterSpacing: 0,
@@ -103,10 +123,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                           ),
                           Text(
                             userEmail,
-                            style: const TextStyle(
-                              fontSize: 12,
+                            style: TextStyle(
+                              fontSize: AppResponsive.sp(context, 12)
+                                  .clamp(11.0, 13.0),
                               fontWeight: FontWeight.w400,
-                              color: Color(0xFF6F6F69),
+                              color: const Color(0xFF6F6F69),
                             ),
                           ),
                         ],
@@ -116,60 +137,78 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 18),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 26),
+            SizedBox(
+              height: AppResponsive.h(context, 18).clamp(12.0, 20.0),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '0 followers · 0 following',
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize:
+                    AppResponsive.sp(context, 12).clamp(11.0, 13.0),
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(
+              height: AppResponsive.h(context, 8).clamp(6.0, 10.0),
+            ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(26, 0, 95, 0),
+              padding: EdgeInsets.fromLTRB(
+                horizontalPadding,
+                0,
+                AppResponsive.w(context, 95).clamp(60.0, 100.0),
+                0,
+              ),
               child: Row(
-                children: const [
+                children: [
                   Expanded(
                     child: Text(
                       'Add a short bio to personalise your profile',
                       style: TextStyle(
-                        fontSize: 11,
+                        fontSize:
+                        AppResponsive.sp(context, 11).clamp(10.0, 12.0),
                         fontWeight: FontWeight.w400,
-                        color: Color(0xFF5E5E59),
+                        color: const Color(0xFF5E5E59),
                       ),
                     ),
                   ),
                   Icon(
                     Icons.edit_outlined,
-                    size: 19,
+                    size: AppResponsive.r(context, 19).clamp(16.0, 20.0),
                     color: Colors.black,
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(
+              height: AppResponsive.h(context, 8).clamp(6.0, 10.0),
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 26),
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppResponsive.w(context, 18).clamp(14.0, 20.0),
+                    vertical: AppResponsive.h(context, 10).clamp(8.0, 12.0),
+                  ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFE5E5DE),
-                    borderRadius: BorderRadius.circular(17),
+                    borderRadius: BorderRadius.circular(
+                      AppResponsive.r(context, 17).clamp(14.0, 18.0),
+                    ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Edit profile',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize:
+                      AppResponsive.sp(context, 16).clamp(14.0, 17.0),
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
                     ),
@@ -177,9 +216,13 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 90),
+            SizedBox(
+              height: AppResponsive.h(context, 90).clamp(50.0, 95.0),
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppResponsive.w(context, 80).clamp(36.0, 84.0),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -204,7 +247,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 50),
+            SizedBox(
+              height: AppResponsive.h(context, 50).clamp(28.0, 54.0),
+            ),
             Expanded(
               child: Column(
                 children: [
@@ -212,27 +257,34 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                     _currentTab == EditProfileTab.created
                         ? 'Inspire with a Pin'
                         : 'You have not saved any ideas yet',
-                    style: const TextStyle(
-                      fontSize: 22,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize:
+                      AppResponsive.sp(context, 22).clamp(18.0, 24.0),
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
                       letterSpacing: -0.4,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: AppResponsive.h(context, 16).clamp(12.0, 18.0),
+                  ),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 10,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppResponsive.w(context, 24).clamp(18.0, 26.0),
+                      vertical: AppResponsive.h(context, 10).clamp(8.0, 12.0),
                     ),
                     decoration: BoxDecoration(
                       color: const Color(0xFFE60023),
-                      borderRadius: BorderRadius.circular(22),
+                      borderRadius: BorderRadius.circular(
+                        AppResponsive.r(context, 22).clamp(18.0, 24.0),
+                      ),
                     ),
                     child: Text(
                       _currentTab == EditProfileTab.created ? 'Create' : 'Save',
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: TextStyle(
+                        fontSize:
+                        AppResponsive.sp(context, 14).clamp(12.0, 15.0),
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
@@ -261,24 +313,35 @@ class _EditProfileTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double titleSize =
+    AppResponsive.sp(context, 18).clamp(15.0, 19.0);
+    final double gap =
+    AppResponsive.h(context, 10).clamp(8.0, 12.0);
+    final double underlineWidth =
+    AppResponsive.w(context, 90).clamp(60.0, 92.0);
+    final double underlineHeight =
+    AppResponsive.h(context, 3).clamp(2.0, 3.5);
+
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(
+        AppResponsive.r(context, 10).clamp(8.0, 12.0),
+      ),
       child: Column(
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 18,
+            style: TextStyle(
+              fontSize: titleSize,
               fontWeight: FontWeight.w600,
               color: Colors.black,
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: gap),
           AnimatedContainer(
             duration: const Duration(milliseconds: 160),
-            width: selected ? 90 : 0,
-            height: 3,
+            width: selected ? underlineWidth : 0,
+            height: underlineHeight,
             color: Colors.black,
           ),
         ],

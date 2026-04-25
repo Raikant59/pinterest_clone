@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import '../features/auth/state/providers.dart';
+import '../utils/app_responsive.dart';
 import 'edit_profile_screen.dart';
 
 class AccountScreen extends ConsumerWidget {
@@ -21,59 +21,87 @@ class AccountScreen extends ConsumerWidget {
         : '@username';
     final String avatarLetter = userName[0].toUpperCase();
 
+    final double horizontalPadding =
+    AppResponsive.w(context, 18).clamp(14.0, 24.0);
+    final double topPadding =
+    AppResponsive.h(context, 16).clamp(12.0, 20.0);
+    final double cardRadius =
+    AppResponsive.r(context, 28).clamp(22.0, 30.0);
+    final double titleSize =
+    AppResponsive.sp(context, 18).clamp(16.0, 20.0);
+    final double sectionTitleSize =
+    AppResponsive.sp(context, 16).clamp(14.0, 18.0);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F4),
       body: SafeArea(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(18, 16, 18, 0),
+              padding: EdgeInsets.fromLTRB(
+                horizontalPadding,
+                topPadding,
+                horizontalPadding,
+                0,
+              ),
               child: Row(
                 children: [
                   InkWell(
                     onTap: () => Navigator.pop(context),
-                    borderRadius: BorderRadius.circular(16),
-                    child: const Icon(
+                    borderRadius: BorderRadius.circular(
+                      AppResponsive.r(context, 16).clamp(12.0, 18.0),
+                    ),
+                    child: Icon(
                       Icons.arrow_back_ios_new,
-                      size: 24,
+                      size: AppResponsive.r(context, 24).clamp(20.0, 28.0),
                       color: Colors.black,
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Center(
                       child: Text(
                         'Your account',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: titleSize,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 32),
+                  SizedBox(width: AppResponsive.w(context, 32).clamp(24.0, 36.0)),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: AppResponsive.h(context, 20).clamp(14.0, 24.0)),
             Expanded(
               child: ListView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(18, 0, 18, 30),
+                padding: EdgeInsets.fromLTRB(
+                  horizontalPadding,
+                  0,
+                  horizontalPadding,
+                  AppResponsive.h(context, 30).clamp(20.0, 36.0),
+                ),
                 children: [
                   Container(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+                    padding: EdgeInsets.fromLTRB(
+                      AppResponsive.w(context, 16).clamp(14.0, 20.0),
+                      AppResponsive.h(context, 16).clamp(14.0, 20.0),
+                      AppResponsive.w(context, 16).clamp(14.0, 20.0),
+                      AppResponsive.h(context, 14).clamp(12.0, 18.0),
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFFEFEFEA),
-                      borderRadius: BorderRadius.circular(28),
+                      borderRadius: BorderRadius.circular(cardRadius),
                     ),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Container(
-                              width: 46,
-                              height: 46,
+                              width: AppResponsive.r(context, 46).clamp(40.0, 52.0),
+                              height: AppResponsive.r(context, 46).clamp(40.0, 52.0),
                               decoration: const BoxDecoration(
                                 color: Color(0xFFB44ED3),
                                 shape: BoxShape.circle,
@@ -81,32 +109,37 @@ class AccountScreen extends ConsumerWidget {
                               alignment: Alignment.center,
                               child: Text(
                                 avatarLetter,
-                                style: const TextStyle(
-                                  fontSize: 24,
+                                style: TextStyle(
+                                  fontSize:
+                                  AppResponsive.sp(context, 24).clamp(20.0, 26.0),
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white,
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 14),
+                            SizedBox(
+                              width: AppResponsive.w(context, 14).clamp(10.0, 16.0),
+                            ),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     userName,
-                                    style: const TextStyle(
-                                      fontSize: 15,
+                                    style: TextStyle(
+                                      fontSize:
+                                      AppResponsive.sp(context, 15).clamp(14.0, 17.0),
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black,
                                     ),
                                   ),
                                   Text(
                                     userHandle,
-                                    style: const TextStyle(
-                                      fontSize: 12,
+                                    style: TextStyle(
+                                      fontSize:
+                                      AppResponsive.sp(context, 12).clamp(11.0, 13.5),
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xFF6E6E69),
+                                      color: const Color(0xFF6E6E69),
                                     ),
                                   ),
                                 ],
@@ -114,7 +147,9 @@ class AccountScreen extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 14),
+                        SizedBox(
+                          height: AppResponsive.h(context, 14).clamp(10.0, 16.0),
+                        ),
                         Row(
                           children: [
                             Expanded(
@@ -130,7 +165,9 @@ class AccountScreen extends ConsumerWidget {
                                 },
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(
+                              width: AppResponsive.w(context, 12).clamp(8.0, 14.0),
+                            ),
                             Expanded(
                               child: _AccountActionButton(
                                 title: 'Share profile',
@@ -149,34 +186,42 @@ class AccountScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 25),
-                  const Text(
+                  SizedBox(height: AppResponsive.h(context, 25).clamp(18.0, 28.0)),
+                  Text(
                     'Settings',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: sectionTitleSize,
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
                     ),
                   ),
-                  const SizedBox(height: 18),
+                  SizedBox(height: AppResponsive.h(context, 18).clamp(14.0, 20.0)),
                   _AccountListTile(title: 'Account management', onTap: () {}),
                   _AccountListTile(title: 'Profile visibility', onTap: () {}),
                   _AccountListTile(
-                      title: 'Refine your recommendations', onTap: () {}),
+                    title: 'Refine your recommendations',
+                    onTap: () {},
+                  ),
                   _AccountListTile(
-                      title: 'Claimed external accounts', onTap: () {}),
+                    title: 'Claimed external accounts',
+                    onTap: () {},
+                  ),
                   _AccountListTile(title: 'Social permissions', onTap: () {}),
                   _AccountListTile(title: 'Notifications', onTap: () {}),
                   _AccountListTile(title: 'Privacy and data', onTap: () {}),
                   _AccountListTile(
-                      title: 'Reports and violations centre', onTap: () {}),
+                    title: 'Reports and violations centre',
+                    onTap: () {},
+                  ),
                   _AccountListTile(title: 'Labs', onTap: () {}),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 18),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: AppResponsive.h(context, 18).clamp(14.0, 20.0),
+                    ),
                     child: Text(
                       'Login',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: sectionTitleSize,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
                       ),
@@ -188,24 +233,28 @@ class AccountScreen extends ConsumerWidget {
                     onTap: () async {
                       await ref.read(authControllerProvider.notifier).signOut();
                     },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 18),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: AppResponsive.h(context, 18).clamp(14.0, 20.0),
+                      ),
                       child: Text(
                         'Log out',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: sectionTitleSize,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
                         ),
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 18),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: AppResponsive.h(context, 18).clamp(14.0, 20.0),
+                    ),
                     child: Text(
                       'Support',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: sectionTitleSize,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
                       ),
@@ -236,20 +285,27 @@ class _AccountActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double radius =
+    AppResponsive.r(context, 18).clamp(14.0, 20.0);
+    final double verticalPadding =
+    AppResponsive.h(context, 12).clamp(10.0, 14.0);
+    final double fontSize =
+    AppResponsive.sp(context, 15).clamp(13.0, 16.0);
+
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(radius),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: EdgeInsets.symmetric(vertical: verticalPadding),
         decoration: BoxDecoration(
           color: const Color(0xFFF7F7F4),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(radius),
         ),
         alignment: Alignment.center,
         child: Text(
           title,
-          style: const TextStyle(
-            fontSize: 15,
+          style: TextStyle(
+            fontSize: fontSize,
             fontWeight: FontWeight.w500,
             color: Colors.black,
           ),
@@ -270,25 +326,32 @@ class _AccountListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double verticalPadding =
+    AppResponsive.h(context, 18).clamp(14.0, 20.0);
+    final double fontSize =
+    AppResponsive.sp(context, 15).clamp(13.0, 16.0);
+    final double iconSize =
+    AppResponsive.r(context, 24).clamp(20.0, 26.0);
+
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 18),
+        padding: EdgeInsets.symmetric(vertical: verticalPadding),
         child: Row(
           children: [
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 15,
+                style: TextStyle(
+                  fontSize: fontSize,
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
                 ),
               ),
             ),
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              size: 24,
+              size: iconSize,
               color: Colors.black,
             ),
           ],

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:flutter/material.dart';
+import '../utils/app_responsive.dart';
 
 class LoaderScreen extends StatefulWidget {
   const LoaderScreen({super.key});
@@ -45,6 +46,10 @@ class _LoaderScreenState extends State<LoaderScreen>
 
   @override
   Widget build(BuildContext context) {
+    final double boxSize = AppResponsive.r(context, 20).clamp(18.0, 24.0);
+    final double orbit = AppResponsive.r(context, 18).clamp(14.0, 20.0);
+    final double dotSize = AppResponsive.r(context, 10).clamp(8.0, 12.0);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -52,21 +57,22 @@ class _LoaderScreenState extends State<LoaderScreen>
           animation: _controller,
           builder: (context, _) {
             final t = _controller.value;
+
             return SizedBox(
-              width: 20,
-              height: 20,
+              width: boxSize,
+              height: boxSize,
               child: Stack(
                 alignment: Alignment.center,
                 children: List.generate(3, (index) {
-                  final angle = (t * 6.28318) + (index * 2.09439);
-                  final dx = 18 * (index == 0 ? 1 : 1) * Math.cos(angle);
-                  final dy = 18 * Math.sin(angle);
+                  final angle = (t * 2 * math.pi) + (index * 2 * math.pi / 3);
+                  final dx = orbit * math.cos(angle);
+                  final dy = orbit * math.sin(angle);
 
                   return Transform.translate(
                     offset: Offset(dx, dy),
                     child: Container(
-                      width: 10,
-                      height: 10,
+                      width: dotSize,
+                      height: dotSize,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _animatedColor(t, index),
@@ -81,9 +87,4 @@ class _LoaderScreenState extends State<LoaderScreen>
       ),
     );
   }
-}
-
-class Math {
-  static double sin(double x) => math.sin(x);
-  static double cos(double x) => math.cos(x);
 }

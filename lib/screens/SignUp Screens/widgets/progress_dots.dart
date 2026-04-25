@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../utils/app_responsive.dart';
 
 class ProgressDots extends StatelessWidget {
   final int filledCount;
@@ -6,6 +7,7 @@ class ProgressDots extends StatelessWidget {
   final int total;
 
   const ProgressDots({
+    super.key,
     required this.filledCount,
     required this.outlinedIndex,
     required this.total,
@@ -13,8 +15,17 @@ class ProgressDots extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double rowHeight =
+    AppResponsive.h(context, 18).clamp(16.0, 20.0);
+    final double dotSize =
+    AppResponsive.r(context, 11).clamp(9.0, 12.0);
+    final double horizontalGap =
+    AppResponsive.w(context, 5).clamp(3.5, 6.0);
+    final double outlinedBorderWidth =
+    AppResponsive.r(context, 2.2).clamp(1.8, 2.4);
+
     return SizedBox(
-      height: 18,
+      height: rowHeight,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: List.generate(total, (index) {
@@ -22,10 +33,10 @@ class ProgressDots extends StatelessWidget {
           final bool isOutlined = index == outlinedIndex;
 
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
+            padding: EdgeInsets.symmetric(horizontal: horizontalGap),
             child: Container(
-              width: 11,
-              height: 11,
+              width: dotSize,
+              height: dotSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isFilled
@@ -35,7 +46,7 @@ class ProgressDots extends StatelessWidget {
                     : const Color(0xFF87877F),
                 border: Border.all(
                   color: isOutlined ? Colors.black : Colors.transparent,
-                  width: isOutlined ? 2.2 : 0,
+                  width: isOutlined ? outlinedBorderWidth : 0,
                 ),
               ),
             ),
