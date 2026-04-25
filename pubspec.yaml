@@ -31,11 +31,11 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#FFFFFF"
-  image: assets/images/pinterest_splash_logo.png
+  image: assets/Logo_and_Icon/Pinteresh_splash_logo.png
 
   android_12:
     color: "#FFFFFF"
-    image: assets/images/pinterest_splash_logo.png
+    image: assets/Logo_and_Icon/Pinteresh_splash_logo.png
     icon_background_color: "#FFFFFF"
 
   web: false
@@ -47,4 +47,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/Logo_and_Icon/
 

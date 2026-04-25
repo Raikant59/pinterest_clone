@@ -583,12 +583,12 @@ class _AnimatedTopSection extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      right: -8,
-                      bottom: 20,
+                      right: -10,
+                      bottom: -25,
                       child: _CollageImageCard(
                         imagePath: 'assets/images/five.jpg',
-                        width: 78,
-                        height: 88,
+                        width: 80,
+                        height: 90,
                         radius: 18,
                       ),
                     ),
@@ -781,7 +781,7 @@ class _PinterestRoundLogo extends StatelessWidget {
 
     return SizedBox(
       child: Image.asset(
-        'assets/images/pinterest_splash_logo.png',
+        'assets/Logo_and_Icon/pinterest_startup_logo.png',
         width: size,
         height: size,
       ),
