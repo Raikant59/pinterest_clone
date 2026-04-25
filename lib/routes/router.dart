@@ -8,11 +8,13 @@ import '../screens/Main_shell_Screen.dart';
 import '../screens/SignUp Screens/Create_Name_Screen.dart';
 import '../screens/SignUp Screens/Create_Password_Screen.dart';
 import '../screens/Startup_screen.dart';
+import '../screens/edit_profile_screen.dart';
 import '../screens/loader_screen.dart';
 import '../screens/login_Screen.dart';
 import '../features/auth/state/auth_session.dart';
 import '../features/auth/state/providers.dart';
 import '../screens/saved_screen.dart';
+import '../screens/your_account_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -62,6 +64,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'saved',
         builder: (context, state) => const SavedScreen(),
       ),
+      GoRoute(
+        path: AppRoutes.editProfile,
+        name: 'editProfile',
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.account,
+        name: 'account',
+        builder: (context, state) => const AccountScreen(),
+      ),
     ],
     redirect: (context, state) {
       final location = state.matchedLocation;
@@ -85,7 +97,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       if (auth.status == AuthStatus.unauthenticated) {
         if (location == AppRoutes.home ||
-            location == AppRoutes.saved ) {
+            location == AppRoutes.saved ||
+            location == AppRoutes.editProfile ||
+            location == AppRoutes.account) {
           return AppRoutes.emailEntry;
         }
 

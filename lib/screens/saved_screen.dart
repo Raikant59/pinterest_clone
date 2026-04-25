@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:pinterest_clone/screens/your_account_screen.dart';
 import '../features/auth/state/providers.dart';
 import '../routes/routes.dart';
+import 'edit_profile_screen.dart';
 
 enum SavedTabType { pins, boards, collages }
 
@@ -40,10 +41,20 @@ class _SavedScreenState extends ConsumerState<SavedScreen> {
               avatarLetter: avatarLetter,
               currentTab: _currentTab,
               onAvatarTap: () {
-                context.push(AppRoutes.editProfile);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const EditProfileScreen(),
+                  ),
+                );
               },
               onSettingsTap: () {
-                context.push(AppRoutes.account);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AccountScreen(),
+                    ),
+                  );
               },
               onTabSelected: (tab) {
                 setState(() {
