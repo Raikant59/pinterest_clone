@@ -3,18 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinterest_clone/routes/route_transition.dart';
 import 'package:pinterest_clone/routes/routes.dart';
-import '../screens/HomeScreen.dart';
 import '../screens/Main_shell_Screen.dart';
 import '../screens/SignUp Screens/Create_Name_Screen.dart';
 import '../screens/SignUp Screens/Create_Password_Screen.dart';
 import '../screens/Startup_screen.dart';
-import '../screens/edit_profile_screen.dart';
 import '../screens/loader_screen.dart';
 import '../screens/login_Screen.dart';
 import '../features/auth/state/auth_session.dart';
 import '../features/auth/state/providers.dart';
 import '../screens/saved_screen.dart';
-import '../screens/your_account_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
