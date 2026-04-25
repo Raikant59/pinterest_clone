@@ -566,85 +566,85 @@ class _AnimatedTopSection extends StatelessWidget {
         child: Stack(
           clipBehavior: Clip.none,
           children: [
-            SlideTransition(
-              position: rightAnimation,
-              child: const PositionedFillSafe(
+            Positioned.fill(
+              child: SlideTransition(
+                position: rightAnimation,
                 child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      right: 100,
-                      top: 75,
-                      child: _CollageImageCard(
-                        imagePath: 'assets/images/three.jpg',
-                        width: 65,
-                        height: 70,
-                        radius: 18,
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned(
+                        right: 100,
+                        top: 75,
+                        child: _CollageImageCard(
+                          imagePath: 'assets/images/three.jpg',
+                          width: 65,
+                          height: 70,
+                          radius: 18,
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      right: -10,
-                      bottom: -25,
-                      child: _CollageImageCard(
-                        imagePath: 'assets/images/five.jpg',
-                        width: 80,
-                        height: 90,
-                        radius: 18,
+                      Positioned(
+                        right: -10,
+                        bottom: -25,
+                        child: _CollageImageCard(
+                          imagePath: 'assets/images/five.jpg',
+                          width: 80,
+                          height: 90,
+                          radius: 18,
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      right: -10,
-                      top: -50,
-                      child: _CollageImageCard(
-                        imagePath: 'assets/images/six.jpg',
-                        width: 100,
-                        height: 88,
-                        radius: 18,
+                      Positioned(
+                        right: -10,
+                        top: -50,
+                        child: _CollageImageCard(
+                          imagePath: 'assets/images/six.jpg',
+                          width: 100,
+                          height: 88,
+                          radius: 18,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
             ),
-            SlideTransition(
-              position: leftAnimation,
-              child: const PositionedFillSafe(
+            Positioned.fill(
+              child: SlideTransition(
+                position: leftAnimation,
                 child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Positioned(
-                      left: -10,
-                      top: -50,
-                      child: _CollageImageCard(
-                        imagePath: 'assets/images/one.jpg',
-                        width: 95,
-                        height: 95,
-                        radius: 16,
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned(
+                        left: -10,
+                        top: -50,
+                        child: _CollageImageCard(
+                          imagePath: 'assets/images/one.jpg',
+                          width: 95,
+                          height: 95,
+                          radius: 16,
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      left: -4,
-                      top: 130,
-                      child: _CollageImageCard(
-                        imagePath: 'assets/images/Two.jpg',
-                        width: 90,
-                        height: 150,
-                        radius: 16,
+                      Positioned(
+                        left: -4,
+                        top: 130,
+                        child: _CollageImageCard(
+                          imagePath: 'assets/images/two.jpg',
+                          width: 90,
+                          height: 150,
+                          radius: 16,
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      left: 100,
-                      top: 30,
-                      child: _CollageImageCard(
-                        imagePath: 'assets/images/four.jpg',
-                        width: 128,
-                        height: 190,
-                        radius: 24,
+                      Positioned(
+                        left: 100,
+                        top: 30,
+                        child: _CollageImageCard(
+                          imagePath: 'assets/images/four.jpg',
+                          width: 128,
+                          height: 190,
+                          radius: 24,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
             ),
           ],
         ),
@@ -721,20 +721,6 @@ class _AnimatedHeadline extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class PositionedFillSafe extends StatelessWidget {
-  final Widget child;
-
-  const PositionedFillSafe({
-    super.key,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned.fill(child: child);
   }
 }
 
