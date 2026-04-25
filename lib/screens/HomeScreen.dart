@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:pinterest_clone/screens/pin_detail_screen.dart';
 import '../features/home/state/home_feed_controller.dart';
 import '../features/home/widgets/four_dot_refresh_loader.dart';
 import '../features/home/widgets/home_feed_loading_grid.dart';
 import '../features/home/widgets/home_pin_card.dart';
 import '../features/home/widgets/personalized_button.dart';
+import '../routes/route_transition.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -206,6 +208,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             return HomePinCard(
                               item: item,
                               height: _itemHeightForIndex(index),
+                              onTap: () {
+                                final related = state.items
+                                    .where((e) => e.id != item.id)
+                                    .take(6)
+                                    .toList();
+
+                                Navigator.push(
+                                  context,
+                                  buildSlideRoute(
+                                    child: PinDetailScreen(
+                                      item: item,
+                                      relatedItems: related,
+                                    ),
+                                  ),
+                                );
+                              },
                             );
                           },
                         ),

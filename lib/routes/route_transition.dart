@@ -35,3 +35,35 @@ CustomTransitionPage<void> buildAuthSlidePage({
     },
   );
 }
+  Route<T> buildSlideRoute<T>({
+    required Widget child,
+  }) {
+    return PageRouteBuilder<T>(
+      transitionDuration: const Duration(milliseconds: 280),
+      reverseTransitionDuration: const Duration(milliseconds: 280),
+      pageBuilder: (context, animation, secondaryAnimation) => child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final primaryTween = Tween<Offset>(
+          begin: const Offset(1, 0),
+          end: Offset.zero,
+        ).chain(
+          CurveTween(curve: Curves.easeOutCubic),
+        );
+
+        final secondaryTween = Tween<Offset>(
+          begin: Offset.zero,
+          end: const Offset(-0.08, 0),
+        ).chain(
+          CurveTween(curve: Curves.easeOutCubic),
+        );
+
+        return SlideTransition(
+          position: secondaryAnimation.drive(secondaryTween),
+          child: SlideTransition(
+            position: animation.drive(primaryTween),
+            child: child,
+          ),
+        );
+      },
+    );
+}
