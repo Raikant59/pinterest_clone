@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../features/auth/state/providers.dart';
+import '../routes/route_transition.dart';
 import '../utils/app_responsive.dart';
 import 'edit_profile_screen.dart';
 
@@ -158,8 +159,8 @@ class AccountScreen extends ConsumerWidget {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const EditProfileScreen(),
+                                    buildSlideRoute(
+                                      child: const EditProfileScreen()
                                     ),
                                   );
                                 },
@@ -174,8 +175,8 @@ class AccountScreen extends ConsumerWidget {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const EditProfileScreen(),
+                                    buildSlideRoute(
+                                      child: const EditProfileScreen()
                                     ),
                                   );
                                 },

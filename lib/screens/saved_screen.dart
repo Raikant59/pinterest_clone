@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/screens/your_account_screen.dart';
 import '../features/auth/state/providers.dart';
+import '../routes/route_transition.dart';
 import '../utils/app_responsive.dart';
 import 'edit_profile_screen.dart';
 
@@ -38,16 +39,16 @@ class _SavedScreenState extends ConsumerState<SavedScreen> {
               onAvatarTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => const EditProfileScreen(),
+                  buildSlideRoute(
+                    child: const EditProfileScreen(),
                   ),
                 );
               },
               onSettingsTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => const AccountScreen(),
+                  buildSlideRoute(
+                    child: const AccountScreen(),
                   ),
                 );
               },
